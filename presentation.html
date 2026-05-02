@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Kobayashi Yume Portfolio Presentation</title>
+  <style>
+    @font-face {
+      font-family: "Bebas Neue";
+      src: url("./portfolioKobayashiYumeLocal/fonts/BebasNeue.woff2") format("woff2");
+      font-display: swap;
+    }
+
+    :root {
+      --paper: #f6f3ed;
+      --ink: #0a0a0a;
+      --soft: rgba(10, 10, 10, 0.12);
+      --soft-strong: rgba(10, 10, 10, 0.32);
+      --veil: rgba(246, 243, 237, 0.86);
+      --red: #d83232;
+      --blue: #006edc;
+      --yellow: #d8a800;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--soft) 0.08vw, transparent 0.08vw),
+        linear-gradient(90deg, var(--soft) 0.08vw, transparent 0.08vw);
+      background-size: 7% 12%;
+      opacity: 0.44;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .progress {
+      position: fixed;
+      top: 3%;
+      left: 50%;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.1%;
+      width: 46%;
+      height: 5%;
+      transform: translateX(-50%);
+      border: 0.08vw solid var(--soft);
+      border-radius: 100vw;
+      background: var(--veil);
+      backdrop-filter: blur(1vw);
+    }
+
+    .dot {
+      width: 2.2%;
+      aspect-ratio: 1;
+      padding: 0;
+      border: 0.08vw solid var(--soft-strong);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: width 260ms ease, border-color 260ms ease, background 260ms ease, transform 260ms ease;
+    }
+
+    .dot:hover {
+      transform: scale(1.35);
+      border-color: var(--ink);
+    }
+
+    .dot.is-active {
+      width: 8%;
+      aspect-ratio: 4 / 1;
+      border-radius: 100vw;
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .deck {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      width: 600%;
+      height: 100%;
+      transform: translateX(0);
+      transition: transform 720ms cubic-bezier(.76,0,.24,1);
+      will-change: transform;
+    }
+
+    .panel {
+      position: relative;
+      flex: 0 0 16.666666%;
+      width: 16.666666%;
+      height: 100%;
+      overflow: hidden;
+      border-right: 0.08vw solid var(--soft);
+      background: var(--paper);
+    }
+
+    .panel-scroll {
+      position: absolute;
+      inset: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+      overscroll-behavior: contain;
+    }
+
+    .panel-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .panel-scroll::after {
+      content: "";
+      display: block;
+      height: 1920%;
+    }
+
+    .panel-inner {
+      position: sticky;
+      top: 0;
+      height: 100%;
+      min-height: 100%;
+      padding: 10% 7% 9%;
+    }
+
+    .kicker {
+      margin: 0 0 2%;
+      font-size: 1.1vw;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      display: inline-block;
+      width: 4%;
+      height: 0.16vw;
+      margin-right: 1.5%;
+      vertical-align: middle;
+      background: var(--red);
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-weight: 400;
+      line-height: 0.8;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      width: 70%;
+      font-size: 13vw;
+    }
+
+    h2 {
+      width: 64%;
+      font-size: 10.8vw;
+    }
+
+    .lead {
+      width: 43%;
+      margin: 3% 0 0;
+      font-size: 1.35vw;
+      line-height: 1.75;
+      font-weight: 650;
+    }
+
+    .body-copy {
+      width: 37%;
+      margin: 5% 0 0;
+      font-size: 1.08vw;
+      line-height: 1.85;
+      font-weight: 560;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1%;
+      width: 56%;
+      margin-top: 4%;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18%;
+      min-height: 5.6vh;
+      padding: 0 2%;
+      border: 0.08vw solid var(--ink);
+      border-radius: 100vw;
+      background: transparent;
+      color: var(--ink);
+      font-size: 1vw;
+      font-weight: 900;
+      transition: transform 220ms ease, background 220ms ease, color 220ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-8%);
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .button.fill {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .button.fill:hover {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .image-block {
+      position: absolute;
+      overflow: hidden;
+      border: 0.08vw solid var(--ink);
+      background: #ffffff;
+      box-shadow: 1.2vw 1.2vw 0 var(--ink);
+    }
+
+    .image-block img {
+      filter: grayscale(100%) contrast(1.08);
+      mix-blend-mode: multiply;
+      transition: filter 300ms ease, transform 480ms ease;
+    }
+
+    .image-block:hover img {
+      filter: grayscale(0%) contrast(1);
+      transform: scale(1.04);
+    }
+
+    .hero-skill {
+      right: 5%;
+      top: 22%;
+      width: 39%;
+      height: 30%;
+    }
+
+    .hero-long {
+      right: 11%;
+      top: 58%;
+      width: 34%;
+      height: 22%;
+    }
+
+    .hero-board {
+      right: 6%;
+      top: 87%;
+      width: 33%;
+      height: 30%;
+    }
+
+    .large-visual {
+      right: 6%;
+      top: 18%;
+      width: 50%;
+      height: 58%;
+    }
+
+    .secondary-visual {
+      left: 7%;
+      top: 92%;
+      width: 44%;
+      height: 35%;
+    }
+
+    .wide-visual {
+      left: 7%;
+      top: 78%;
+      width: 58%;
+      height: 30%;
+    }
+
+    .side-note {
+      position: absolute;
+      right: 7%;
+      top: 83%;
+      width: 23%;
+      border-top: 0.16vw solid var(--ink);
+      padding-top: 1.6%;
+      font-size: 1.02vw;
+      line-height: 1.7;
+      font-weight: 720;
+    }
+
+    .page-mark {
+      position: absolute;
+      right: 5%;
+      bottom: 4%;
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: 6vw;
+      line-height: 0.8;
+      opacity: 0.14;
+      pointer-events: none;
+    }
+
+    .rule {
+      position: absolute;
+      left: 7%;
+      bottom: 8%;
+      width: 52%;
+      height: 0.1vw;
+      background: var(--ink);
+      transform-origin: left center;
+      scale: var(--scroll-scale, 0.14) 1;
+      transition: scale 120ms linear;
+    }
+
+    .scene-nav {
+      position: absolute;
+      left: 7%;
+      bottom: 5.7%;
+      width: 52%;
+      height: 5%;
+      z-index: 5;
+    }
+
+    .scene-jump {
+      position: absolute;
+      left: var(--p, 0%);
+      top: 50%;
+      width: 2.2%;
+      aspect-ratio: 1;
+      padding: 0;
+      border: 0.08vw solid var(--ink);
+      background: var(--paper);
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+    }
+
+    .scene-jump:hover,
+    .scene-jump.is-active {
+      background: var(--ink);
+    }
+
+    .scroll-anim {
+      position: absolute;
+      left: var(--x, 50%);
+      top: var(--y, 50%);
+      width: var(--size, 9%);
+      aspect-ratio: 1;
+      opacity: var(--anim-opacity, 0);
+      transform: translateY(var(--anim-y, 34%));
+      background: var(--color, var(--ink));
+      border: 0.08vw solid var(--ink);
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+
+    .scroll-anim.slow {
+      --color: var(--red);
+      --size: 7%;
+    }
+
+    .scroll-anim.mid {
+      --color: var(--blue);
+      --size: 8.5%;
+    }
+
+    .scroll-anim.fast {
+      --color: var(--yellow);
+      --size: 10%;
+    }
+
+    .pdf-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2%;
+      width: 48%;
+      margin-top: 5%;
+    }
+
+    .pdf-list a {
+      display: grid;
+      min-height: 16vh;
+      padding: 7%;
+      border: 0.08vw solid var(--ink);
+      background: rgba(255, 255, 255, 0.42);
+      transition: background 200ms ease, transform 200ms ease;
+    }
+
+    .pdf-list a:hover {
+      background: var(--ink);
+      color: var(--paper);
+      transform: translateY(-5%);
+    }
+
+    .pdf-list strong {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: 3.3vw;
+      line-height: 0.85;
+      font-weight: 400;
+    }
+
+    .pdf-list span {
+      align-self: end;
+      font-size: 0.92vw;
+      font-weight: 850;
+    }
+
+    .directory-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.4%;
+      width: 66%;
+      margin-top: 5%;
+    }
+
+    .directory-list a {
+      display: grid;
+      min-height: 18vh;
+      padding: 7%;
+      border: 0.08vw solid var(--ink);
+      background: rgba(255, 255, 255, 0.44);
+      transition: background 200ms ease, color 200ms ease, transform 200ms ease;
+    }
+
+    .directory-list a:hover {
+      background: var(--ink);
+      color: var(--paper);
+      transform: translateY(-5%);
+    }
+
+    .directory-list strong {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: 3.1vw;
+      line-height: 0.86;
+      font-weight: 400;
+    }
+
+    .directory-list span {
+      align-self: end;
+      font-size: 0.88vw;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .transition-cover {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      transform: translateY(100%);
+      transition: transform 500ms cubic-bezier(.76,0,.24,1);
+      pointer-events: none;
+    }
+
+    .transition-cover.is-active {
+      transform: translateY(0);
+    }
+
+    .transition-cover span {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: 14vw;
+      line-height: 0.78;
+    }
+
+    @media (max-aspect-ratio: 5 / 4) {
+      .progress {
+        width: 70%;
+        height: 5.5%;
+      }
+
+      .panel-inner {
+        padding-top: 18%;
+      }
+
+      h1 {
+        width: 88%;
+        font-size: 18vw;
+      }
+
+      h2 {
+        width: 82%;
+        font-size: 15vw;
+      }
+
+      .lead,
+      .body-copy {
+        width: 70%;
+        font-size: 2.5vw;
+      }
+
+      .button {
+        min-width: 28%;
+        font-size: 2.2vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="progress" aria-label="Presentation sections">
+    <button class="dot is-active" type="button" data-go="0" aria-label="Go to section 1"></button>
+    <button class="dot" type="button" data-go="1" aria-label="Go to section 2"></button>
+    <button class="dot" type="button" data-go="2" aria-label="Go to section 3"></button>
+    <button class="dot" type="button" data-go="3" aria-label="Go to section 4"></button>
+    <button class="dot" type="button" data-go="4" aria-label="Go to section 5"></button>
+    <button class="dot" type="button" data-go="5" aria-label="Go to section 6"></button>
+  </nav>
+
+  <main class="deck" aria-live="polite">
+    <section class="panel" data-panel="0">
+      <div class="panel-scroll">
+        <div class="panel-inner">
+          <p class="kicker">Portfolio presentation</p>
+          <h1>KOBAYASHI<br>YUME</h1>
+          <div class="scroll-anim slow" style="--x: 14%; --y: 60%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.26" data-from="48" data-to="-34"></div>
+          <div class="scroll-anim mid" style="--x: 27%; --y: 58%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="66" data-to="-42"></div>
+          <div class="scroll-anim fast" style="--x: 41%; --y: 56%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.15" data-out-end="0.24" data-from="86" data-to="-52"></div>
+          <div class="scroll-anim slow" style="--x: 20%; --y: 66%;" data-in-start="0.24" data-in-end="0.34" data-out-start="0.49" data-out-end="0.59" data-from="48" data-to="-34"></div>
+          <div class="scroll-anim mid" style="--x: 34%; --y: 64%;" data-in-start="0.26" data-in-end="0.36" data-out-start="0.49" data-out-end="0.58" data-from="66" data-to="-42"></div>
+          <div class="scroll-anim fast" style="--x: 49%; --y: 62%;" data-in-start="0.28" data-in-end="0.38" data-out-start="0.48" data-out-end="0.57" data-from="86" data-to="-52"></div>
+          <div class="scroll-anim slow" style="--x: 12%; --y: 72%;" data-in-start="0.57" data-in-end="0.67" data-out-start="0.82" data-out-end="0.92" data-from="48" data-to="-34"></div>
+          <div class="scroll-anim mid" style="--x: 26%; --y: 70%;" data-in-start="0.59" data-in-end="0.69" data-out-start="0.82" data-out-end="0.91" data-from="66" data-to="-42"></div>
+          <div class="scroll-anim fast" style="--x: 42%; --y: 68%;" data-in-start="0.61" data-in-end="0.71" data-out-start="0.81" data-out-end="0.90" data-from="86" data-to="-52"></div>
+          <div class="image-block hero-skill"><img src="./portfolioKobayashiYumeLocal/img/SKILLSET.png" alt=""></div>
+          <div class="image-block hero-long"><img src="./portfolioKobayashiYumeLocal/img/moho2.png" alt=""></div>
+          <div class="image-block hero-board"><img src="./portfolioKobayashiYumeLocal/img/boardgame.png" alt=""></div>
+          <div class="rule"></div>
+          <div class="scene-nav" aria-label="Vertical animation scenes">
+            <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
+            <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
+            <button class="scene-jump" type="button" style="--p: 67%;" data-scene="2" aria-label="Scene 3"></button>
+          </div>
+          <div class="page-mark">01</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="1">
+      <div class="panel-scroll">
+        <div class="panel-inner">
+          <p class="kicker">Interactive HTML</p>
+          <h2>Web<br>Portfolio</h2>
+          <p class="lead">既存のスクロール式Webポートフォリオへ遷移。3Dモデル表示があるため、ローカルサーバー経由で見る前提。</p>
+          <p class="body-copy">この紹介ページ側では本体HTMLを統合せず、遷移の手前だけを作る。見せ方をここで調整しても、既存作品ページは壊さない。</p>
+          <div class="action-row">
+            <a class="button fill" data-transition href="./portfolioKobayashiYumeLocal/index.html?view=desktop">Desktop HTML</a>
+            <a class="button" data-transition href="./portfolioKobayashiYumeLocal/index.html">Auto view</a>
+          </div>
+          <div class="image-block large-visual"><img src="./portfolioKobayashiYumeLocal/img/SKILLSET.png" alt="Interactive portfolio preview"></div>
+          <div class="image-block secondary-visual"><img src="./portfolioKobayashiYumeLocal/img/Drum2.png" alt="Hardware device preview"></div>
+          <p class="side-note">Horizontal sections reset their own vertical scroll position when entered.</p>
+          <div class="rule"></div>
+          <div class="page-mark">02</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="2">
+      <div class="panel-scroll">
+        <div class="panel-inner">
+          <p class="kicker">Hardware</p>
+          <h2>Virtual<br>Drums</h2>
+          <p class="lead">身体動作とデバイス制作をつなぐハードウェア作品。PDFとWeb本体の両方へ導線を置く。</p>
+          <div class="action-row">
+            <a class="button fill" href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="_blank" rel="noopener noreferrer">PDF page</a>
+            <a class="button" data-transition href="./portfolioKobayashiYumeLocal/index.html?view=desktop">Open HTML</a>
+          </div>
+          <div class="image-block large-visual"><img src="./portfolioKobayashiYumeLocal/img/Drum2.png" alt="Virtual Drums"></div>
+          <p class="body-copy">縦スクロール量に合わせて下のラインが伸びる。後でここにスクロール連動の追加アニメーションを入れられる構造。</p>
+          <div class="rule"></div>
+          <div class="page-mark">03</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="3">
+      <div class="panel-scroll">
+        <div class="panel-inner">
+          <p class="kicker">Rig models</p>
+          <h2>2D / 3D<br>Rig</h2>
+          <p class="lead">2Dと3Dの併用、リグモデル、映像表現の領域。白地に黒でプレゼン資料っぽく見せる。</p>
+          <div class="action-row">
+            <a class="button fill" href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="_blank" rel="noopener noreferrer">PDF page</a>
+            <a class="button" data-transition href="./portfolioKobayashiYumeLocal/index.html?view=desktop">Open HTML</a>
+          </div>
+          <div class="image-block large-visual"><img src="./portfolioKobayashiYumeLocal/img/moho.png" alt="Rig model still"></div>
+          <div class="image-block wide-visual"><img src="./portfolioKobayashiYumeLocal/img/moho2.png" alt="Rig model timeline"></div>
+          <div class="rule"></div>
+          <div class="page-mark">04</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="4">
+      <div class="panel-scroll">
+        <div class="panel-inner">
+          <p class="kicker">Others</p>
+          <h2>Other<br>Works</h2>
+          <p class="lead">さまざまな制作物。PDFビューアが対応している環境では、ページ指定で各制作領域へ直接開ける。</p>
+          <div class="pdf-list">
+            <a href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="_blank" rel="noopener noreferrer"><strong>Top</strong><span>page 1</span></a>
+            <a href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="_blank" rel="noopener noreferrer"><strong>Hardware</strong><span>page 4</span></a>
+            <a href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="_blank" rel="noopener noreferrer"><strong>Rig</strong><span>page 8</span></a>
+            <a href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=12" target="_blank" rel="noopener noreferrer"><strong>3D</strong><span>page 12</span></a>
+          </div>
+          <div class="image-block large-visual"><img src="./portfolioKobayashiYumeLocal/img/moho.png" alt="Other works preview"></div>
+          <p class="side-note">The exact page landing depends on the browser PDF viewer.</p>
+          <div class="rule"></div>
+          <div class="page-mark">05</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="5">
+      <div class="panel-scroll">
+        <div class="panel-inner">
+          <p class="kicker">Index</p>
+          <h2>Portfolio<br>Index</h2>
+          <p class="lead">Web PortfolioとPDF各ページへの索引</p>
+          <div class="directory-list">
+            <a class="fill-link" data-transition href="./portfolioKobayashiYumeLocal/index.html?view=desktop"><strong>Web<br>Portfolio</strong><span>interactive HTML</span></a>
+            <a href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf" target="_blank" rel="noopener noreferrer"><strong>Full<br>PDF</strong><span>all pages</span></a>
+            <a href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="_blank" rel="noopener noreferrer"><strong>Top</strong><span>PDF page 1</span></a>
+            <a href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="_blank" rel="noopener noreferrer"><strong>Hardware</strong><span>PDF page 4</span></a>
+            <a href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="_blank" rel="noopener noreferrer"><strong>Rig</strong><span>PDF page 8</span></a>
+            <a href="./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=12" target="_blank" rel="noopener noreferrer"><strong>3D</strong><span>PDF page 12</span></a>
+          </div>
+          <p class="side-note">PDF is warmed in the background after entering the later sections.</p>
+          <div class="rule"></div>
+          <div class="page-mark">06</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="transition-cover" aria-hidden="true"><span>OPEN</span></div>
+
+  <script>
+    const deck = document.querySelector(".deck");
+    const panels = [...document.querySelectorAll(".panel")];
+    const scrollers = [...document.querySelectorAll(".panel-scroll")];
+    const dots = [...document.querySelectorAll(".dot")];
+    const cover = document.querySelector(".transition-cover");
+    let current = 0;
+    let xIntent = 0;
+    let lock = false;
+    let yLock = false;
+    let yGestureLocked = false;
+    let yIntent = 0;
+    let yGestureTimer = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let pdfWarmStarted = false;
+    const pdfHref = "./portfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf";
+    const ySnapPoints = [0, 0.34, 0.67, 1];
+    const scenePoints = [0, 0.34, 0.67];
+
+    function updateScrollAnimation(index) {
+      const scroller = scrollers[index];
+      const panel = panels[index];
+      const max = Math.max(scroller.scrollHeight - scroller.clientHeight, 1);
+      const ratio = Math.min(scroller.scrollTop / max, 1);
+      panel.style.setProperty("--scroll-scale", String(0.14 + ratio * 0.86));
+      panel.querySelectorAll(".scroll-anim").forEach((item) => {
+        applyScrollAnim(item, ratio);
+      });
+      panel.querySelectorAll(".scene-jump").forEach((item) => {
+        const point = scenePoints[Number(item.dataset.scene || 0)] ?? 0;
+        item.classList.toggle("is-active", Math.abs(point - ratio) < 0.12);
+      });
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function segment(value, start, end) {
+      return clamp((value - start) / Math.max(end - start, 0.001), 0, 1);
+    }
+
+    function applyScrollAnim(item, ratio) {
+      const inStart = Number(item.dataset.inStart || 0.14);
+      const inEnd = Number(item.dataset.inEnd || 0.38);
+      const outStart = Number(item.dataset.outStart || 0.62);
+      const outEnd = Number(item.dataset.outEnd || 0.86);
+      const from = Number(item.dataset.from || 48);
+      const to = Number(item.dataset.to || -32);
+      const inProgress = segment(ratio, inStart, inEnd);
+      const outProgress = segment(ratio, outStart, outEnd);
+      const opacity = inProgress * (1 - outProgress);
+      const holdY = from * (1 - inProgress);
+      const outY = to * outProgress;
+      item.style.setProperty("--anim-opacity", opacity.toFixed(3));
+      item.style.setProperty("--anim-y", `${(holdY + outY).toFixed(2)}%`);
+    }
+
+    function goTo(index) {
+      const next = Math.max(0, Math.min(index, panels.length - 1));
+      if (next === current || lock) return;
+      lock = true;
+      current = next;
+      yLock = false;
+      deck.style.transform = `translateX(-${current * 16.666666}%)`;
+      dots.forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === current));
+      scrollers[current].scrollTo({ top: 0, left: 0, behavior: "auto" });
+      updateScrollAnimation(current);
+      if (current >= 4) warmPdfCache();
+      window.setTimeout(() => {
+        xIntent = 0;
+        yIntent = 0;
+        yGestureLocked = false;
+        lock = false;
+      }, 760);
+    }
+
+    function snapVertical(direction) {
+      if (yLock) return;
+      const scroller = scrollers[current];
+      const max = Math.max(scroller.scrollHeight - scroller.clientHeight, 1);
+      const ratio = scroller.scrollTop / max;
+      let target = ySnapPoints[ySnapPoints.length - 1];
+      if (direction > 0) {
+        target = ySnapPoints.find((point) => point > ratio + 0.04) ?? 1;
+      } else {
+        target = [...ySnapPoints].reverse().find((point) => point < ratio - 0.04) ?? 0;
+      }
+      yLock = true;
+      yGestureLocked = true;
+      yIntent = 0;
+      scroller.scrollTo({ top: max * target, left: 0, behavior: "smooth" });
+      scheduleYGestureUnlock();
+      window.setTimeout(() => {
+        yLock = false;
+        updateScrollAnimation(current);
+      }, 520);
+    }
+
+    function jumpVertical(point) {
+      const scroller = scrollers[current];
+      const max = Math.max(scroller.scrollHeight - scroller.clientHeight, 1);
+      yLock = true;
+      yGestureLocked = true;
+      yIntent = 0;
+      scroller.scrollTo({ top: max * point, left: 0, behavior: "smooth" });
+      scheduleYGestureUnlock();
+      window.setTimeout(() => {
+        yLock = false;
+        updateScrollAnimation(current);
+      }, 520);
+    }
+
+    function scheduleYGestureUnlock() {
+      window.clearTimeout(yGestureTimer);
+      yGestureTimer = window.setTimeout(() => {
+        yGestureLocked = false;
+      }, 720);
+    }
+
+    function warmPdfCache() {
+      if (pdfWarmStarted || !("fetch" in window)) return;
+      pdfWarmStarted = true;
+      fetch(pdfHref, { cache: "force-cache" }).catch(() => {});
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => goTo(Number(dot.dataset.go)));
+    });
+
+    scrollers.forEach((scroller, index) => {
+      scroller.addEventListener("scroll", () => updateScrollAnimation(index), { passive: true });
+    });
+
+    document.querySelectorAll(".scene-jump").forEach((button) => {
+      button.addEventListener("click", () => {
+        const point = scenePoints[Number(button.dataset.scene || 0)] ?? 0;
+        jumpVertical(point);
+      });
+    });
+
+    window.addEventListener("wheel", (event) => {
+      const mostlyHorizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY) * 1.15 || event.shiftKey;
+      event.preventDefault();
+      if (mostlyHorizontal) {
+        if (lock) return;
+        xIntent += event.deltaX || event.deltaY;
+        if (Math.abs(xIntent) < window.innerWidth * 0.22) return;
+        goTo(current + Math.sign(xIntent));
+        return;
+      }
+      if (yGestureLocked) {
+        scheduleYGestureUnlock();
+        return;
+      }
+      yIntent += event.deltaY;
+      if (Math.abs(yIntent) < window.innerHeight * 0.08) return;
+      snapVertical(Math.sign(yIntent));
+    }, { passive: false });
+
+    window.addEventListener("touchstart", (event) => {
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (event) => {
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      if (Math.abs(dx) < window.innerWidth * 0.18 || Math.abs(dx) < Math.abs(dy) * 1.35) return;
+      goTo(current + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown") goTo(current + 1);
+      if (event.key === "ArrowLeft" || event.key === "PageUp") goTo(current - 1);
+    });
+
+    document.querySelectorAll("a[data-transition]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+        event.preventDefault();
+        cover.classList.add("is-active");
+        window.setTimeout(() => {
+          window.location.href = link.href;
+        }, 430);
+      });
+    });
+
+    updateScrollAnimation(0);
+  </script>
+</body>
+</html>

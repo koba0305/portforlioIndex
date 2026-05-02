@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>KobayashiYume-portfolio</title>
+<style>    @font-face {
+  font-family: "Bebas Neue";
+  src: url("./fonts/BebasNeue.woff2") format("woff2");
+}
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000000;
+      height: 45000px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      font-family: 'Bebas Neue', sans-serif;
+    }
+    body {
+      background: #000;
+    }
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    #mobile-root {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: min(100vw, calc(100vh * 9 / 19.5));
+      height: min(100vh, calc(100vw * 19.5 / 9));
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+      background: #000;
+      z-index: 0;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .scroll-label {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-80px);
+      color: white;
+      font-weight: bold;
+      pointer-events: none;
+        cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+      text-decoration: none !important;
+      border-bottom: none !important;
+      user-select: none;
+    }
+
+    .scroll-label[data-modal] {
+      display: inline-block;
+      padding: 6vh 9vw;
+      margin: -6vh -9vw;
+    }
+
+    .scroll-label[data-modal="modal2"],
+    .scroll-label[data-modal="modal4"] {
+      padding: 36vh 9vw 6vh 9vw;
+      margin: -36vh -9vw -6vh -9vw;
+    }
+
+    .scroll-label[data-modal="modal1"],
+    .scroll-label[data-modal="modal3"],
+    .scroll-label[data-modal="modal5"] {
+      padding: 6vh 9vw 36vh 9vw;
+      margin: -6vh -9vw -36vh -9vw;
+    }
+
+    .scroll-label[data-modal="modal1"],
+    .scroll-label[data-modal="modal4"] {
+      padding-right: 19vw;
+      margin-right: -19vw;
+    }
+
+    .scroll-label[data-modal="modal2"],
+    .scroll-label[data-modal="modal3"],
+    .scroll-label[data-modal="modal5"] {
+      padding-left: 24vw;
+      margin-left: -24vw;
+    }
+
+.modal-hitbox {
+  position: fixed;
+  top: -50vh;
+  left: -50vh;
+  width: 150vw;
+  height: 150vh;
+  pointer-events: auto;
+  cursor: pointer;
+  
+}
+
+.modal-close {
+  transform: translateX(0);
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+  width: 12vw;
+  height: 12vw;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.modal-close::before,
+.modal-close::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10vw;
+  height: 0.3vw;
+  background-color: white;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.modal-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.modal-close:hover::before,
+.modal-close:hover::after {
+  background-color: rgba(255, 255, 255, 0.5); /* 赤くするとか */
+}
+
+.modal-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none; /* ← 背景だけどクリック貫通させるなら */
+}
+
+
+
+.modal {
+  display: none !important;
+  pointer-events: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh; 
+  height: 100svh;
+  height: 100dvh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+  
+}
+
+
+.modal.visible {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  opacity: 1;
+}
+
+
+.modal-content {
+  width: 100vw;
+  height: 100vh; 
+  height: 100svh;
+  height: 100dvh;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  z-index: 20;
+  user-select: none;
+}
+.modal-description {
+  position: absolute;
+  font-size: 1.4rem;
+  letter-spacing: 0.03rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 8px 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 30;
+      top: 70vh;
+    left: 70vw;
+}
+
+.modal-canvas {
+    position: absolute;
+  width: clamp(320px, 70vmin, 900px);
+  height: clamp(320px, 70vmin, 900px);
+  z-index:5;
+    cursor: grab;
+}
+
+  #modal5-canvas{
+  top: calc(0vh + 2vh);
+  left:10vw;
+  transform: translate(0);
+  }
+  #modal4-canvas{
+  top: 6vh;
+  left:0;
+  transform: translate(0);
+  }
+  #modal1-canvas{
+  top: calc(2vh + 2vh);
+  left:0;
+  transform: translate(-5vw);
+  }
+  #modal2-canvas{
+  top: calc(0vh);
+  left:0;
+  transform: translate(-5vw);
+  }
+    #modal3-canvas{
+  top: calc(8vh);
+  left:0;
+  transform: translateY(-5vw);
+  }
+
+  .modal1-image {
+  position: absolute;
+  left: 51vw;
+  height: auto;
+  z-index: 10;
+  pointer-events: none;
+  width: 440px;  top: 28vh;
+  }
+
+  .modal2-hover {
+  position: absolute;
+  left: 53vw;
+  top: 19vh;
+  width: 440px;
+  z-index: 8;
+}
+.modal2-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.modal2-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  font-size: 1.1rem;
+  letter-spacing: 0.02rem;
+  font-weight: 300;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+}
+.modal2-text a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline;
+}
+
+.modal.visible .modal2-hover:hover .modal2-text {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal4-hover {
+  position: absolute;
+  left: 52vw;
+  top: 26vh;
+  width: 400px;
+  z-index: 8;
+}
+.modal4-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.modal4-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  font-size: 1.1rem;
+  letter-spacing: 0.02rem;
+  font-weight: 300;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.modal.visible .modal4-hover:hover .modal4-text {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal4-hover2 {
+  position: absolute;
+  left: 52vw;
+  top: 68vh;
+  width: 300px;
+  z-index: 8;
+}
+.modal4-image2 {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.modal4-text2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  font-size: 1.1rem;
+  letter-spacing: 0.02rem;
+  font-weight: 300;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+}
+.modal4-text2 a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline;
+}
+
+.modal.visible .modal4-hover2:hover .modal4-text2 {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal:not(.visible) .modal2-text,
+.modal:not(.visible) .modal4-text,
+.modal:not(.visible) .modal4-text2 {
+  display: none !important;
+}
+
+
+.loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.5rem;
+  z-index: 100;
+}
+
+.hidden {
+  display: none;
+  pointer-events: none;
+}
+
+
+
+.glitch-square {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: gentle-sway 4s ease-in-out infinite;
+  mix-blend-mode: lighten;
+}
+
+@keyframes gentle-sway {
+  0%   { transform: translateX(-3px); }
+  50%  { transform: translateX(3px); }
+  100% { transform: translateX(-3px); }
+}
+
+.glitch-square.alt {
+  animation: gentle-sway-alt 8s ease-in-out infinite;
+}
+
+@keyframes gentle-sway-alt {
+  0%   { transform: translateX(10px); }
+  60%  { transform: translateX(-10px); }
+  100% { transform: translateX(10px); }
+}
+
+    .scroll-label#contact-svg {
+      top: 50%;
+      left: 50%;
+      width: 40vw;
+      height: auto;
+      margin-left: -20vw;
+      margin-top: -20vw;
+    }
+    .scroll-label img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    
+
+@keyframes fadeOnce {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+/* 閉じるボタンの選択とハイライトを殺す */
+.modal .close-modal,
+.modal .modal-close {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  -webkit-user-drag: none;
+}
+.modal .close-modal::selection,
+.modal .modal-close::selection {
+  background: transparent;
+}
+
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  z-index: 9;
+  opacity: 1;
+  transition: opacity 2s ease;
+  pointer-events: none;
+}
+
+#loading-screen.fade-out {
+  opacity: 0;
+}
+
+
+
+.download-link {
+  animation: pulse 2s ease-in-out infinite;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+@keyframes pulse {
+  0%, 100% {
+    text-shadow: 0 0 0px white;
+  }
+  50% {
+    text-shadow: 0 0 8px white;
+  }
+}
+.download-link:hover {
+  animation: none; 
+  filter: drop-shadow(0 0 8px white);
+}
+.scroll-label * {
+  pointer-events: inherit;
+}
+
+.pdfdownload{
+  font-size: 5vw;
+  line-height: 1;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: auto !important;
+  margin-left: 0 !important;
+  margin-top: 0 !important;
+}
+
+    .scroll-label:first-of-type,
+    .scroll-label:nth-of-type(7) {
+      font-size: 25vw;
+      left: 2%;
+    }
+
+    .scroll-label:nth-of-type(2) {
+      top: 35%;
+      font-size: 5vw;
+    }
+
+    .scroll-label:nth-of-type(3) {
+      left: 20%;
+      top: 15%;
+      font-size: 23vw;
+    }
+
+    .scroll-label:nth-of-type(4) {
+      top: 65%;
+      left: 30%;
+      font-size: 5vw;
+    }
+
+    .scroll-label:nth-of-type(6),
+    .scroll-label:nth-of-type(8),
+    .scroll-label:nth-of-type(10) {
+      top: 25%;
+      font-size: 5vw;
+    }
+
+    .scroll-label:nth-of-type(5),
+    .scroll-label:nth-of-type(9) {
+      font-size: 25vw;
+      left: 25%;
+    }
+
+    .intro-label {
+      top: 40%;
+    }
+
+    .modal-hitbox {
+      display: none !important;
+    }
+
+    .modal2-hover {
+      width: 88.4vw;
+      top: 77vh;
+      left: 4vw;
+    }
+
+    .modal4-hover {
+      width: 45vw;
+      top: 40vh;
+    }
+
+    .modal4-hover2 {
+      width: 40vw;
+      top: 70vh;
+    }
+
+    .modal1-image {
+      width: 86.4vw;
+      top: 72vh;
+      left: 8vw;
+    }
+
+    #modal5-canvas { transform: translate(-4vw, 15vh) !important; }
+    #modal4-canvas { transform: translate(0vw, 9vh) !important; }
+    #modal1-canvas { transform: translate(-10vw, 12vh) !important; }
+    #modal2-canvas { transform: translate(-10vw, 15vh) !important; }
+    #modal3-canvas { transform: translate(-9vw, 7vh) !important; }
+
+    #modal1-description { top: 6vh; left: 6vw; }
+    #modal2-description { top: 6vh; left: 6vw; }
+    #modal3-description { top: 75vh; left: 4vw; }
+    #modal4-description { top: 70vh; left: 10vw; }
+    #modal5-description { top: 70vh; left: 6vw; }
+
+    .modal2-image {
+      filter: brightness(0.72);
+      clip-path: inset(0 0 50% 0);
+    }
+
+    .modal-close {
+      width: 25vw;
+      height: 25vw;
+    }
+
+    .modal-close::before,
+    .modal-close::after {
+      width: 20vw;
+      height: 0.4vw;
+    }
+
+    .modal4-image {
+      top: 62vh;
+    }
+
+    .modal4-image2 {
+      top: 80vh;
+    }
+
+    .pdfdownload {
+      font-size: 8vw;
+    }
+
+  </style>
+  <script type="module" src="vendor/model-viewer/model-viewer.min.js"></script>
+</head>
+<body>
+  <div id="mobile-root">
+  <div id="loading-screen"></div>
+  <a class="scroll-label"  data-show="0.034 0.284 0.534 0.784" data-hide="0.05 0.3 0.55 0.8" style="top: 5%;" data-modal="modal1"></div>About me<div class="modal-hitbox" data-modal="modal1"></div></a>
+  <a class="scroll-label"  data-show="0.036 0.286 0.536 0.786" data-hide="0.055 0.305 0.555 0.805" style="left: 7%;top: 25%;" data-modal="modal1">This is my profile.</a>
+  <a class="scroll-label"  data-show="0.066 0.316 0.566 0.816" data-hide="0.086 0.336 0.586 0.836" style="top: 65%;"data-modal="modal2">Hardware<div class="modal-hitbox" data-modal="modal2"></div></a>
+  <a class="scroll-label"  data-show="0.068 0.318 0.568 0.818" data-hide="0.088 0.338 0.588 0.838" style="left: 65%; top: 79%;"data-modal="modal2">These are the hardware devices<br> I have created thus far.</a>
+  <a class="scroll-label"  data-show="0.11 0.36 0.61 0.86" data-hide="0.13 0.38 0.63 0.88" style="top: 3%;"data-modal="modal3">2Dworks<div class="modal-hitbox" data-modal="modal3"></div></a>
+  <a class="scroll-label"  data-show="0.112 0.362 0.612 0.862" data-hide="0.132 0.382 0.632 0.882" style="left: 48%;top: 21%"data-modal="modal3">Here is a selection of illustrations and cover designs I have worked on.</a>
+  <a class="scroll-label"  data-show="0.14 0.39 0.64 0.89" data-hide="0.16 0.41 0.66 0.91" style="left: 5%;top: 81%;"data-modal="modal4">Rigmodels<div class="modal-hitbox" data-modal="modal4"></div></a>
+  <a class="scroll-label"  data-show="0.142 0.392 0.642 0.892" data-hide="0.162 0.412 0.662 0.912" style="left: 5%;top: 71%;"data-modal="modal4">Here is a selection of my work, <br>including 2D rigged models <br>and animated videos.</a>
+  <a class="scroll-label"  data-show="0.174 0.424 0.674 0.924" data-hide="0.197 0.447 0.697 0.947" style="top: 2%;"data-modal="modal5">3Dworks<div class="modal-hitbox" data-modal="modal5"></div></a>
+  <a class="scroll-label"  data-show="0.176 0.426 0.676 0.926" data-hide="0.199 0.449 0.699 0.949"data-modal="modal5">Here is a collection of 3D models <br>I have designed and created.</a>
+  <a class="scroll-label download-link"  data-show="0.234 0.484 0.734 0.984" data-hide="0.25 0.5 0.75 0.99999" id="contact-svg" href="mailto:kobayashi.yume.0305@gmail.com"> <img src="model/contact.svg" alt="contact"></a>
+  <a class="scroll-label"  data-show="0" data-hide="0.015" id="intro-label" style="left:5%; top: 30%;font-size: 20vw;cursor: default;">KOBAYASHI YUME</a>
+  <a class="scroll-label download-link pdfdownload"  data-show="0.204 0.454 0.704 0.954" data-hide="0.225 0.475 0.725 0.975" id="contact-svg" style="top: 60%;" href="https://drive.google.com/file/d/1aYirjOamGPydNv5K7MS1zgUGApiZ8Lw_/view?usp=sharing" target="_blank" rel="noopener noreferrer">PORTfolio_PDF_DOWNLOAD</a>
+
+<div id="glitch-template" style="display: none;">
+  <div class="modal-bg">
+    <div class="glitch-square" style="top: 14%; left: 15%; width: 20vw; height: 2vh;"></div>
+    <div class="glitch-square" style="top: 20%; left: 25%; width: 40vw; height: 8vh;"></div>
+    <div class="glitch-square" style="top: 20%; left: 75%; width: 20vw; height: 6vh;"></div>
+    <div class="glitch-square alt" style="top: 30%; left: 10%; width: 60vw; height: 12vh;"></div>
+    <div class="glitch-square" style="top: 42%; left: 35%; width: 55vw; height: 10vh;"></div>
+    <div class="glitch-square alt" style="top: 50%; left: 30%; width: 66vw; height: 6vh;"></div>
+    <div class="glitch-square" style="top: 57%; left: 44%; width: 34vw; height: 4vh;"></div>
+    <div class="glitch-square alt" style="top: 63%; left: 23%; width: 52vw; height: 10vh;"></div>
+    <div class="glitch-square" style="top: 70%; left: 33%; width: 38vw; height: 6vh;"></div>
+    <div class="glitch-square" style="top: 84%; left: 50%; width: 40vw; height: 2vh;"></div>
+  </div>
+</div>
+
+
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <div class="modal-close close-modal"></div>
+    <div class="loading-indicator hidden">Now Loading...</div>
+    <canvas id="modal1-canvas"class="modal-canvas"></canvas>
+    <img class="modal1-image" src="img/SKILLSET.png" alt="illustrator"/>
+    </div>
+    <div class="modal-description" id="modal1-description">
+      Grab & play.<br><br>
+      This is me in 2023.
+    </div>
+  </div>
+</div>
+
+
+
+  </div>
+</div>
+
+
+<div id="modal2" class="modal">
+  <div class="modal-content">
+    <div class="modal-close close-modal"></div>
+    <div class="loading-indicator hidden">Now Loading...</div>
+    <canvas id="modal2-canvas"class="modal-canvas"></canvas>
+    <div class="modal2-hover">
+      <img class="modal2-image" src="img/Drum2.png" alt="drums"/>
+      <div class="modal2-text">Virtual Drums はパントマイムに似た動きで演奏が可能なグローブ型のデバイスであり、<br>
+「第三回 100Project」にて製作を行なった。<br>
+当 Project では Virtual Drums チームリーダーの役職に就き、今作品の着想から最終プレゼンまでを務めた。<br>
+Arduino で MIDI 音楽ソフトを動かすスクリプトや赤外線レーザー測距での距離調整等、様々なプロトタイプを都度製作し、先輩から助言をいただきながら改良を続けた。<br>
+優秀ハードウェア賞受賞<br><br>
+YouTube 動画<br><a href="https://www.youtube.com/watch?v=LGOJBzxyIWU" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=LGOJBzxyIWU</a></div>
+    </div>
+    </div>
+    <div class="modal-description" id="modal2-description">
+      Grab & play.<br><br>
+      DecimatedWireframe<br>
+      Software: Blender
+    </div>
+  </div>
+</div>
+
+<div id="modal3" class="modal">
+  <div class="modal-content">
+    <div class="modal-close close-modal"></div>
+    <div class="loading-indicator hidden">Now Loading...</div>
+    <canvas id="modal3-canvas"class="modal-canvas"></canvas>
+    </div>
+    <div class="modal-description" id="modal3-description">
+      Grab & play.<br><br>
+      Software: illustrator Blender
+    </div>
+  </div>
+</div>
+
+<div id="modal4" class="modal">
+  <div class="modal-content">
+    <div class="modal-close close-modal"></div>
+    <div class="loading-indicator hidden">Now Loading...</div>
+    <canvas id="modal4-canvas"class="modal-canvas"></canvas>
+    <div class="modal4-hover">
+      <img class="modal4-image" src="img/moho.png" alt="Model Preview"/>
+      <div class="modal4-text">卒業論文『2Dと3D併用リグモデルによる
+不気味さの映像表現の制作と考察』<br><br>
+本研究では、2Dキャラクターに3D的な動きを付与する際に発生する視覚的違和感や不気味さに着目し、<br>
+「不気味の谷」領域に入り込みにくい動きの条件について検討を行った。
+    </div>
+    </div>
+    <div class="modal4-hover2">
+      <img class="modal4-image2" src="img/moho2.png" alt="Model Preview"/>
+    <div class="modal4-text2">
+モデル使用映像　<a href="https://www.youtube.com/shorts/xiXx1KAaKyQ" target="_blank" rel="noopener noreferrer">https://www.youtube.com/shorts/xiXx1KAaKyQ</a>
+      </div>
+    </div>
+    </div>
+    <div class="modal-description" id="modal4-description">
+      Grab & play.<br><br>
+      Software: Moho Blender
+    </div>
+  </div>
+</div>
+
+
+<div id="modal5" class="modal">
+  <div class="modal-content">
+    <div class="modal-close close-modal"></div>
+    <div class="loading-indicator hidden">Now Loading...</div>
+    <canvas id="modal5-canvas" class="modal-canvas"></canvas>
+    <div id="modal5-description" class="modal-description">
+    Grab & play.<br><br>
+    Production period: 6 months<br>
+    File size: 7.5 MB<br>
+    Software: Blender
+    </div>
+  </div>
+</div>
+  </div>
+
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./build/three.module.js"
+      }
+    }
+  </script>
+  <script type="module">
+        window.addEventListener('load', () => {
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, 50);
+  document.querySelectorAll('.modal-hitbox').forEach(el => el.remove());
+});
+    import * as THREE from 'three';
+    import { GLTFLoader } from './jsm/GLTFLoader.js';
+    import { OrbitControls } from './jsm/OrbitControls.js';
+    if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+const labels = document.querySelectorAll('.scroll-label');
+const mobileRoot = document.getElementById('mobile-root');
+const getRootSize = () => ({
+  width: mobileRoot?.clientWidth || window.innerWidth,
+  height: mobileRoot?.clientHeight || window.innerHeight
+});
+const MAIN_CAMERA_MODE = 'perspective'; // 'perspective' | 'orthographic'
+const MAIN_CAMERA_FOV = 75;
+const MAIN_ORTHO_SIZE = 2.8;
+const MAIN_CAMERA_NEAR = 0.1;
+const MAIN_CAMERA_FAR = 1000;
+const MAIN_CAMERA_SCROLL_FOV_ENABLED = true;
+const MAIN_CAMERA_SCROLL_FOV_BASE = 75; // start/end
+const MAIN_CAMERA_SCROLL_FOV_PEAK = 90; // middle
+const MAIN_CAMERA_SCROLL_FOV_SMOOTH = 0.08; // 0..1 (small = smoother)
+
+    const scene = new THREE.Scene();
+    const { width: rootWidth, height: rootHeight } = getRootSize();
+    const aspect = rootWidth / rootHeight;
+    const clock = new THREE.Clock();
+    let scrollRatio = 0;
+    let smoothedMainFov = MAIN_CAMERA_FOV;
+
+    function createMainCamera(viewAspect) {
+      if (MAIN_CAMERA_MODE === 'orthographic') {
+        const halfH = MAIN_ORTHO_SIZE;
+        const halfW = halfH * viewAspect;
+        return new THREE.OrthographicCamera(
+          -halfW, halfW, halfH, -halfH, MAIN_CAMERA_NEAR, MAIN_CAMERA_FAR
+        );
+      }
+      return new THREE.PerspectiveCamera(MAIN_CAMERA_FOV, viewAspect, MAIN_CAMERA_NEAR, MAIN_CAMERA_FAR);
+    }
+
+    const mainCamera = createMainCamera(aspect);
+    mainCamera.position.set(0, 1.6, 5);
+    mainCamera.lookAt(0, 1, 0);
+    if (mainCamera.isPerspectiveCamera) {
+      smoothedMainFov = mainCamera.fov;
+    }
+
+
+
+const renderer = new THREE.WebGLRenderer({
+antialias: true
+});
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.shadowMap.enabled = true;
+
+  renderer.shadowMap.type = THREE.BasicShadowMap;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.toneMappingExposure = 0.8;
+
+
+renderer.setSize(rootWidth, rootHeight);
+mobileRoot.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(mainCamera, renderer.domElement);
+controls.enableZoom = false;
+controls.enablePan = false;
+controls.enableRotate = false;
+
+
+    const loader = new GLTFLoader();
+    let cameraDriver;
+    let mixer;
+    let animationDuration;
+    const dynamicLights = [];
+    const path = 
+  location.hostname === '127.0.0.1' || location.hostname === 'localhost'
+    ? 'model/heyaportfoliokeiryou.glb'//ローカル
+    : 'model/heyaportfoliokeiryou.glb?rev=' + Date.now(); 
+
+    loader.load('model/heyaportfoliokeiryou.glb', (gltf) => {
+      cameraDriver = gltf.scene.getObjectByName("CameraDriver");
+
+      gltf.scene.traverse((child) => {
+        if (child.isMesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          if (child.material && child.material.roughness !== undefined) {
+            child.material.roughness = 0.8;
+            child.material.metalness = 0.0;
+          }
+        }
+        if (child.isLight) {
+          child.castShadow = true;
+          child.userData.originalIntensity = child.intensity * 0.003;
+          child.intensity = child.userData.originalIntensity;
+          dynamicLights.push(child);
+
+          if (child.shadow) {
+            child.shadow.mapSize.width = 256;
+            child.shadow.mapSize.height = 256;
+            if (child.shadow.camera) {
+              child.shadow.camera.near = 0.1;
+              child.shadow.camera.far = 100;
+              child.shadow.camera.left = -1;
+              child.shadow.camera.right = 1;
+              child.shadow.camera.top = 1;
+              child.shadow.camera.bottom = -1;
+            }
+          }
+        }
+      });
+
+      mixer = new THREE.AnimationMixer(gltf.scene);
+      gltf.animations.forEach(clip => {
+        mixer.clipAction(clip).play();
+        animationDuration = clip.duration;
+      });
+
+      scene.add(gltf.scene);
+      sceneReady = true;
+
+      const loadingScreen = document.getElementById('loading-screen');
+  if (loadingScreen) {
+    loadingScreen.classList.add('fade-out');
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+    }, 2000);
+  }
+
+
+    }, undefined, (error) => {
+      console.error('読み込み失敗:', error);
+    });
+
+    let sceneReady = false;
+    const FADE_DURATION = 500;
+
+
+
+function fadeIn(label) {
+  label.classList.add('visible');
+  label.style.transition = `opacity ${FADE_DURATION}ms ease, transform ${FADE_DURATION}ms ease`;
+  label.style.opacity = '1';
+  label.style.pointerEvents = 'auto';
+  if (label.id === 'contact-svg') {
+    if (label.classList.contains('pdfdownload')) {
+      label.style.transform = 'translate(-50%, -50%)';
+    } else {
+      label.style.transform = 'translateY(0)';
+    }
+  } else {
+    label.style.transform = 'translateX(0)';
+  }
+}
+
+function fadeOut(label) {
+  label.classList.remove('visible');
+  label.style.transition = `opacity ${FADE_DURATION}ms ease, transform ${FADE_DURATION}ms ease`;
+  label.style.opacity = '0';
+  label.style.pointerEvents = 'none';
+  if (label.id === 'contact-svg') {
+    if (label.classList.contains('pdfdownload')) {
+      label.style.transform = 'translate(-50%, -48%)';
+    } else {
+      label.style.transform = 'translateY(20px)';
+    }
+  } else {
+    label.style.transform = 'translateX(-80px)';
+  }
+}
+
+function updateLabels(scrollRatio) {
+
+  labels.forEach(label => {
+    const shows = label.dataset.show.split(' ').map(parseFloat);
+    const hides = label.dataset.hide.split(' ').map(parseFloat);
+    let matched = false;
+    for (let i = 0; i < shows.length; i++) {
+      if (scrollRatio >= shows[i] && scrollRatio <= hides[i]) {
+        matched = true;
+        break;
+      }
+    }
+    const currentlyVisible = label.classList.contains('visible');
+    if (matched && !currentlyVisible) {
+      fadeIn(label);
+    } else if (!matched && currentlyVisible) {
+      fadeOut(label);
+    }
+  });
+}
+
+
+
+window.updateLabels = updateLabels;
+    let lastFrameTime = 0;
+let FRAME_MS = 1000 / 60;
+
+function animate(t = 0) {
+  requestAnimationFrame(animate);
+  if (t - lastFrameTime < FRAME_MS) return;
+  lastFrameTime = t;
+
+
+      
+      const delta = clock.getDelta();
+      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+      const scrollY = window.scrollY;
+      scrollRatio = scrollY / maxScroll;
+
+
+      const clampedScroll = THREE.MathUtils.clamp(scrollRatio, 0, 1);
+
+      updateLabels(scrollRatio);
+
+      if (scrollY >= maxScroll - 1) {
+        window.scrollTo({ top: 1, behavior: 'auto' });
+      } else if (scrollY <= 0) {
+        window.scrollTo({ top: maxScroll - 1, behavior: 'auto' });
+      }
+
+      if (sceneReady && mixer && animationDuration !== undefined) {
+        const desiredTime = scrollRatio * animationDuration*4;
+        mixer.setTime(desiredTime);
+        scene.updateMatrixWorld(true);
+      }
+
+      let dimFactor = 1.0;
+      if (scrollRatio < 0.3) {
+        dimFactor = 1.0;
+      } else if (scrollRatio < 0.4) {
+        dimFactor = 1.0 - 0.5 * ((scrollRatio - 0.3) / 0.1);
+      } else if (scrollRatio < 0.6) {
+        dimFactor = 0.5;
+      } else if (scrollRatio < 0.7) {
+        dimFactor = 0.5 + 0.5 * ((scrollRatio - 0.6) / 0.1);
+      } else {
+        dimFactor = 1.0;
+      }
+
+      dynamicLights.forEach(light => {
+        light.intensity = light.userData.originalIntensity * dimFactor;
+      });
+
+      if (mainCamera.isPerspectiveCamera && MAIN_CAMERA_SCROLL_FOV_ENABLED) {
+        const segmentPhase = (clampedScroll * 4) % 1; // 0..1 in each 25% segment
+        const peakBlend = Math.sin(Math.PI * segmentPhase); // 0 -> 1 -> 0 per segment
+        const targetFov = MAIN_CAMERA_SCROLL_FOV_BASE +
+          (MAIN_CAMERA_SCROLL_FOV_PEAK - MAIN_CAMERA_SCROLL_FOV_BASE) * peakBlend;
+        smoothedMainFov += (targetFov - smoothedMainFov) * MAIN_CAMERA_SCROLL_FOV_SMOOTH;
+        mainCamera.fov = smoothedMainFov;
+        mainCamera.updateProjectionMatrix();
+      }
+
+      if (sceneReady && cameraDriver) {
+        mainCamera.position.copy(cameraDriver.position);
+        mainCamera.quaternion.copy(cameraDriver.quaternion);
+      }
+
+      renderer.render(scene, mainCamera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+  const { width, height } = getRootSize();
+  const aspect = width / height;
+  if (mainCamera.isPerspectiveCamera) {
+    mainCamera.aspect = aspect;
+  } else if (mainCamera.isOrthographicCamera) {
+    const halfH = MAIN_ORTHO_SIZE;
+    const halfW = halfH * aspect;
+    mainCamera.left = -halfW;
+    mainCamera.right = halfW;
+    mainCamera.top = halfH;
+    mainCamera.bottom = -halfH;
+  }
+  mainCamera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+  updateAllModalViewers();
+});
+
+
+function addGlitchSquaresTo(modalEl) {
+  const template = document.getElementById('glitch-template');
+  if (!template) return;
+  const content = modalEl.querySelector('.modal-content');
+  if (!content) return;
+
+  if (content.querySelector('.modal-bg')) return;
+
+  const clone = template.firstElementChild.cloneNode(true);
+  content.appendChild(clone);
+}
+
+const wireframeGroup = new THREE.Group();
+scene.add(wireframeGroup);
+wireframeGroup.visible = false;
+
+
+
+const modalViewers = {}; // modalIdごとにthree.js関連を保存
+const GLOBAL_MODAL_MODEL_SCALE = 1.5;
+const GLOBAL_MODAL_CAMERA_DISTANCE = 1.4;
+const GLOBAL_MODAL_CANVAS_SCALE = 1.3;
+const modalSettings = {
+  modal1: { model: 'model/Aposeyume.glb', wireframe: true },
+  modal2: { model: 'model/gloves.glb', wireframe: true },
+  modal3: { model: 'model/2D.glb', wireframe: false },
+  modal4: { model: 'model/yamu3Dkubi.glb', wireframe: true, scaleBoost: 1.32 },
+  modal5: { model: 'model/heyaportfoliokeiryou.glb', wireframe: true },
+};
+
+const modalSizeRules = {
+  modal1: { scale: 1.0 },
+  modal2: { scale: 1.0 },
+  modal3: { scale: 1.05 },
+  modal4: { scale: 0.9 },
+  modal5: { scale: 0.75 },
+};
+
+function getViewportSize() {
+  const width = Math.round(mobileRoot?.clientWidth || window.innerWidth);
+  const height = Math.round(mobileRoot?.clientHeight || window.innerHeight);
+  return { width, height };
+}
+
+function getCanvasSize(canvasId, width, height) {
+  const modalId = canvasId.replace('-canvas', '');
+  const rule = modalSizeRules[modalId] ?? { scale: 1.0 };
+  const minSide = Math.min(width, height);
+  const desired = Math.round(minSide * 0.9 * rule.scale * GLOBAL_MODAL_CANVAS_SCALE);
+  const maxSize = Math.round(minSide * 0.95 * GLOBAL_MODAL_CANVAS_SCALE);
+  const minSize = Math.round(minSide * 0.62 * GLOBAL_MODAL_CANVAS_SCALE);
+  return Math.round(Math.max(minSize, Math.min(maxSize, desired)));
+}
+
+function updateModalViewerSize(modalId) {
+  const v = modalViewers[modalId];
+  if (!v?.initialized) return;
+
+  const { width, height } = getViewportSize();
+  const size = getCanvasSize(v.canvas.id, width, height);
+  v.renderer.setSize(size, size);
+  v.renderer.setPixelRatio(window.devicePixelRatio);
+  v.canvas.style.width = `${size}px`;
+  v.canvas.style.height = `${size}px`;
+
+  if (v.scaleTarget && v.baseScale) {
+    v.scaleTarget.scale.setScalar(v.baseScale * (v.scaleBoost || 1) * GLOBAL_MODAL_MODEL_SCALE);
+  }
+}
+
+function updateAllModalViewers() {
+  Object.keys(modalViewers).forEach(updateModalViewerSize);
+}
+
+
+function initModalViewer(modalId) {
+  if (modalViewers[modalId]?.initialized) return;
+    const modalEl = document.getElementById(modalId);
+  const loadingEl = modalEl.querySelector('.loading-indicator');
+  if (loadingEl) loadingEl.classList.remove('hidden');
+  const { width, height } = getViewportSize();
+  const canvas = document.getElementById(`${modalId}-canvas`);
+  const size = getCanvasSize(canvas.id, width, height);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(size, size);  
+  renderer.setPixelRatio(window.devicePixelRatio);
+  canvas.style.width = `${size}px`;
+  canvas.style.height = `${size}px`;
+
+
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 180);
+  camera.position.set(0, 0, 100);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.enableZoom = false;
+  controls.enablePan = false;
+  controls.enableRotate = true;
+
+  const loader = new GLTFLoader();
+  loader.load(modalSettings[modalId].model,
+  (gltf)=> {
+    const model = gltf.scene;
+
+    // 中心合わせ
+    const box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.sub(center);
+
+    const group = new THREE.Group();
+    group.add(model);
+    group.rotation.y = -Math.PI / 1.5;
+
+  const useWireframe = modalSettings[modalId]?.wireframe;
+
+  model.traverse(child => {
+    if (child.isMesh) {
+      if (useWireframe) {
+        child.material = new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+          wireframe: true,
+        });
+      } else {
+        child.material = child.material.clone();
+      }
+    }
+  });
+  if (!useWireframe) {
+    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    const dir = new THREE.DirectionalLight(0xffffff, 1.0);
+    dir.position.set(1, 1, 2);
+    scene.add(ambient, dir);
+  }
+
+  scene.add(group);
+
+
+const modelSize = box.getSize(new THREE.Vector3()).length();
+const target = 2.0;
+const s = target / (modelSize || 1);
+
+const scaleBoost = modalSettings[modalId]?.scaleBoost ?? 1;
+model.scale.setScalar(s * scaleBoost * GLOBAL_MODAL_MODEL_SCALE);
+
+
+      model.updateMatrixWorld(true);
+const box1 = new THREE.Box3().setFromObject(model);
+const center1 = box1.getCenter(new THREE.Vector3());
+model.position.sub(center1);
+
+      camera.position.set(0, 0, target * 1.2 * GLOBAL_MODAL_CAMERA_DISTANCE);
+      camera.lookAt(0, 0, 0);
+
+      controls.target.copy(group.position);
+      controls.update();
+
+    if (useWireframe) {
+        const wireframeGroup = new THREE.Group();
+        wireframeGroup.add(group);
+        scene.add(wireframeGroup);
+      } else {
+        scene.add(group);
+      }
+    // 保存
+    modalViewers[modalId] = {
+      renderer,
+      scene,
+      camera,
+      controls,      mesh: group,
+      scaleTarget: model,
+      baseScale: s,
+      scaleBoost: scaleBoost,
+      animationId: null,
+      initialized: true,
+      canvas,
+    };
+
+
+    animateModal(modalId);
+    if (loadingEl) loadingEl.classList.add('hidden');
+  });
+}
+
+function animateModal(modalId, t = 0) {
+  const v = modalViewers[modalId];
+  if (!v) return;
+  v.animationId = requestAnimationFrame((ts) => animateModal(modalId, ts));
+
+  const last = v.lastFrameTime || 0;
+  if (t - last < FRAME_MS) return;
+  v.lastFrameTime = t;
+ 
+
+  v.mesh.rotation.y += 0.003;
+  v.controls.update();
+  v.renderer.render(v.scene, v.camera);
+}
+
+function openModal(modalEl) {
+  const modalId = modalEl.id;
+
+  document.querySelectorAll(".modal").forEach(m => {
+    if (m !== modalEl) {
+      m.classList.remove("visible");
+      m.style.display = "none";
+      m.style.pointerEvents = "none";
+    }
+  });
+  modalEl.classList.add('visible');
+  addGlitchSquaresTo(modalEl);
+
+  setTimeout(() => {
+    modalEl.style.pointerEvents = 'auto';
+    const canvas = modalEl.querySelector('canvas');
+    if (canvas) canvas.style.pointerEvents = 'auto';
+ if (!modalViewers[modalId]?.initialized) {
+      initModalViewer(modalId);
+    }
+  }, 0);
+}
+
+function closeModal(modalEl) {
+  const modalId = modalEl.id;
+  const viewer = modalViewers[modalId];
+  modalEl.classList.remove('visible');
+  modalEl.style.pointerEvents = 'none';
+
+  const canvas = modalEl.querySelector('canvas');
+  if (canvas) canvas.style.pointerEvents = 'none';
+
+  if (viewer) {
+    cancelAnimationFrame(viewer.animationId);
+    viewer.animationId = null;
+    viewer.initialized = false;
+
+
+
+    const ctx = viewer.canvas.getContext('2d');
+    ctx.clearRect(0, 0, viewer.canvas.width, viewer.canvas.height);
+
+  }
+}
+
+
+function setupModal4Toggle() {}
+
+
+function bindModalTriggers() {
+  document.querySelectorAll('[data-modal]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const modalId = el.dataset.modal;
+      const modalEl = document.getElementById(modalId);
+      if (modalEl) {
+        openModal(modalEl);
+      } else {
+        console.warn('モーダルが見つかりません:', modalId);
+      }
+    });
+  });
+}
+
+function bindModalClosers() {
+  document.querySelectorAll('.close-modal').forEach(button => {
+    button.addEventListener('click', () => {
+      const modalEl = button.closest('.modal');
+      if (modalEl) {
+        closeModal(modalEl);
+      }
+    });
+  });
+}
+
+// 起動時バインド
+document.addEventListener('DOMContentLoaded', () => {
+  bindModalTriggers();
+
+
+  bindModalClosers();
+});
+
+
+// 多分animationつけてるのとscrolltriggerがfixなのが原因でcssが効かない。ここでメディアクエリ分を調整する
+const pdfBtn = document.querySelector('.pdfdownload');
+function updatePdfTop() {
+    pdfBtn.style.top = '50%';
+    pdfBtn.style.left = '50%';
+    pdfBtn.style.transform = 'translate(-50%, -50%)';
+    pdfBtn.style.marginLeft = '0';
+    pdfBtn.style.marginTop = '0';
+}
+window.addEventListener('resize', updatePdfTop);
+updatePdfTop();
+
+  </script>
+</body>
+</html>
