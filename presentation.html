@@ -151,7 +151,11 @@
       top: 0;
       height: 100%;
       min-height: 100%;
-      padding: 10% 7% 9%;
+      padding: 17% 7% 9%;
+    }
+
+    .panel:first-child .panel-inner {
+      padding-top: 25%;
     }
 
     .kicker {
@@ -199,12 +203,8 @@
       font-weight: 650;
     }
 
-    .body-copy {
-      width: 37%;
-      margin: 5% 0 0;
-      font-size: 1.08vw;
-      line-height: 1.85;
-      font-weight: 560;
+    .panel[data-panel="4"] .lead {
+      width: 34%;
     }
 
     .action-row {
@@ -308,29 +308,6 @@
       height: 30%;
     }
 
-    .side-note {
-      position: absolute;
-      right: 7%;
-      top: 83%;
-      width: 23%;
-      border-top: 0.16vw solid var(--ink);
-      padding-top: 1.6%;
-      font-size: 1.02vw;
-      line-height: 1.7;
-      font-weight: 720;
-    }
-
-    .page-mark {
-      position: absolute;
-      right: 5%;
-      bottom: 4%;
-      font-family: "Bebas Neue", Impact, sans-serif;
-      font-size: 6vw;
-      line-height: 0.8;
-      opacity: 0.14;
-      pointer-events: none;
-    }
-
     .rule {
       position: absolute;
       left: 7%;
@@ -360,6 +337,7 @@
       aspect-ratio: 1;
       padding: 0;
       border: 0.08vw solid var(--ink);
+      border-radius: 50%;
       background: var(--paper);
       transform: translate(-50%, -50%);
       cursor: pointer;
@@ -405,6 +383,14 @@
       gap: 2%;
       width: 48%;
       margin-top: 5%;
+    }
+
+    .pdf-list.right {
+      position: absolute;
+      right: 7%;
+      top: 28%;
+      width: 34%;
+      margin-top: 0;
     }
 
     .pdf-list a {
@@ -505,6 +491,10 @@
         padding-top: 18%;
       }
 
+      .panel:first-child .panel-inner {
+        padding-top: 32%;
+      }
+
       h1 {
         width: 88%;
         font-size: 18vw;
@@ -515,8 +505,7 @@
         font-size: 15vw;
       }
 
-      .lead,
-      .body-copy {
+      .lead {
         width: 70%;
         font-size: 2.5vw;
       }
@@ -562,7 +551,6 @@
             <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
             <button class="scene-jump" type="button" style="--p: 67%;" data-scene="2" aria-label="Scene 3"></button>
           </div>
-          <div class="page-mark">01</div>
         </div>
       </div>
     </section>
@@ -573,16 +561,13 @@
           <p class="kicker">Interactive HTML</p>
           <h2>Web<br>Portfolio</h2>
           <p class="lead">既存のスクロール式Webポートフォリオへ遷移。3Dモデル表示があるため、ローカルサーバー経由で見る前提。</p>
-          <p class="body-copy">この紹介ページ側では本体HTMLを統合せず、遷移の手前だけを作る。見せ方をここで調整しても、既存作品ページは壊さない。</p>
           <div class="action-row">
             <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">Desktop HTML</a>
             <a class="button" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html">Auto view</a>
           </div>
           <div class="image-block large-visual"><img src="./INDEXportfolioKobayashiYumeLocal/img/SKILLSET.png" alt="Interactive portfolio preview"></div>
           <div class="image-block secondary-visual"><img src="./INDEXportfolioKobayashiYumeLocal/img/Drum2.png" alt="Hardware device preview"></div>
-          <p class="side-note">Horizontal sections reset their own vertical scroll position when entered.</p>
           <div class="rule"></div>
-          <div class="page-mark">02</div>
         </div>
       </div>
     </section>
@@ -598,9 +583,7 @@
             <a class="button" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">Open HTML</a>
           </div>
           <div class="image-block large-visual"><img src="./INDEXportfolioKobayashiYumeLocal/img/Drum2.png" alt="Virtual Drums"></div>
-          <p class="body-copy">縦スクロール量に合わせて下のラインが伸びる。後でここにスクロール連動の追加アニメーションを入れられる構造。</p>
           <div class="rule"></div>
-          <div class="page-mark">03</div>
         </div>
       </div>
     </section>
@@ -618,7 +601,6 @@
           <div class="image-block large-visual"><img src="./INDEXportfolioKobayashiYumeLocal/img/moho.png" alt="Rig model still"></div>
           <div class="image-block wide-visual"><img src="./INDEXportfolioKobayashiYumeLocal/img/moho2.png" alt="Rig model timeline"></div>
           <div class="rule"></div>
-          <div class="page-mark">04</div>
         </div>
       </div>
     </section>
@@ -629,16 +611,13 @@
           <p class="kicker">Others</p>
           <h2>Other<br>Works</h2>
           <p class="lead">さまざまな制作物。PDFビューアが対応している環境では、ページ指定で各制作領域へ直接開ける。</p>
-          <div class="pdf-list">
+          <div class="pdf-list right">
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="_blank" rel="noopener noreferrer"><strong>Top</strong><span>page 1</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="_blank" rel="noopener noreferrer"><strong>Hardware</strong><span>page 4</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="_blank" rel="noopener noreferrer"><strong>Rig</strong><span>page 8</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=12" target="_blank" rel="noopener noreferrer"><strong>3D</strong><span>page 12</span></a>
           </div>
-          <div class="image-block large-visual"><img src="./INDEXportfolioKobayashiYumeLocal/img/moho.png" alt="Other works preview"></div>
-          <p class="side-note">The exact page landing depends on the browser PDF viewer.</p>
           <div class="rule"></div>
-          <div class="page-mark">05</div>
         </div>
       </div>
     </section>
@@ -650,16 +629,14 @@
           <h2>Portfolio<br>Index</h2>
           <p class="lead">Web PortfolioとPDF各ページへの索引</p>
           <div class="directory-list">
-            <a class="fill-link" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop"><strong>Web<br>Portfolio</strong><span>interactive HTML</span></a>
+            <a data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop"><strong>Web<br>Portfolio</strong><span>interactive HTML</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf" target="_blank" rel="noopener noreferrer"><strong>Full<br>PDF</strong><span>all pages</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="_blank" rel="noopener noreferrer"><strong>Top</strong><span>PDF page 1</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="_blank" rel="noopener noreferrer"><strong>Hardware</strong><span>PDF page 4</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="_blank" rel="noopener noreferrer"><strong>Rig</strong><span>PDF page 8</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=12" target="_blank" rel="noopener noreferrer"><strong>3D</strong><span>PDF page 12</span></a>
           </div>
-          <p class="side-note">PDF is warmed in the background after entering the later sections.</p>
           <div class="rule"></div>
-          <div class="page-mark">06</div>
         </div>
       </div>
     </section>
