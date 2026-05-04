@@ -365,6 +365,7 @@
 
     .scroll-anim.model-canvas {
       --size: 60%;
+      --model-y: 20%;
       height: auto;
       aspect-ratio: 1 / 1;
       background: transparent;
@@ -487,6 +488,12 @@
         font-size: 2.2vw;
       }
     }
+
+    @media (min-aspect-ratio: 5 / 4) {
+      .scroll-anim.model-canvas {
+        --model-y: -8%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -544,7 +551,7 @@
           <div class="scroll-anim slow" style="--z: 1; --x: 61%; --y: 60%;" data-in-start="0.57" data-in-end="0.67" data-out-start="1" data-out-end="1" data-from="48" data-to="0"></div>
           <div class="scroll-anim mid" style="--z: 1; --x: 75%; --y: 58%;" data-in-start="0.59" data-in-end="0.67" data-out-start="1" data-out-end="1" data-from="66" data-to="0"></div>
           <div class="scroll-anim fast" style="--z: 1; --x: 91%; --y: 56%;" data-in-start="0.61" data-in-end="0.67" data-out-start="1" data-out-end="1" data-from="86" data-to="0"></div>
-          <canvas class="scroll-anim fast model-canvas" data-model-viewer="heya" style="--z: 2; --x: 5%; --y: 20%;" data-in-start="0.61" data-in-end="0.67" data-out-start="1" data-out-end="1" data-from="86" data-to="0" aria-hidden="true"></canvas>
+          <canvas class="scroll-anim fast model-canvas" data-model-viewer="heya" style="--z: 2; --x: 5%; --y: var(--model-y, 20%);" data-in-start="0.61" data-in-end="0.67" data-out-start="1" data-out-end="1" data-from="86" data-to="0" aria-hidden="true"></canvas>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
             <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
