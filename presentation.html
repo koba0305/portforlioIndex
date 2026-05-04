@@ -416,6 +416,13 @@
       background: transparent;
     }
 
+    .model-frame[data-model-state="error"] {
+      background:
+        linear-gradient(45deg, transparent 48%, var(--paper) 48% 52%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, var(--paper) 48% 52%, transparent 52%),
+        #ff0000;
+    }
+
     .action-row.scroll-anim {
       position: relative;
       left: auto;
@@ -942,7 +949,7 @@
       const verticalFov = THREE.MathUtils.degToRad(camera.fov);
       const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * camera.aspect);
       const fitFov = Math.min(verticalFov, horizontalFov);
-      const distance = (sphere.radius / Math.sin(fitFov / 2)) * 1.08;
+      const distance = (sphere.radius / Math.sin(fitFov / 2)) * 0.76;
       camera.near = Math.max(distance / 100, 0.01);
       camera.far = distance * 100;
       camera.position.set(0, 0, distance);
@@ -1004,6 +1011,8 @@
       const key = canvas.dataset.modelViewer;
       const settings = modelSettings[key];
       if (!settings || modelViewers.has(canvas)) return;
+      const frame = canvas.parentElement;
+      if (frame) frame.dataset.modelState = "loading";
 
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
       renderer.setClearColor(0x000000, 0);
@@ -1029,7 +1038,9 @@
         scene.add(group);
         viewer.group = group;
         frameCameraToObject(group, camera);
+        if (frame) frame.dataset.modelState = "loaded";
       }, undefined, (error) => {
+        if (frame) frame.dataset.modelState = "error";
         console.error("presentation model load failed", settings.model, error);
       });
 
