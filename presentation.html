@@ -158,6 +158,10 @@
       padding-top: 18.5%;
     }
 
+    .panel:not([data-panel="0"]) .panel-inner {
+      padding-top: 17.5%;
+    }
+
     .kicker {
       margin: 0 0 2%;
       font-size: 1.1vw;
@@ -324,15 +328,6 @@
       width: 64%;
     }
 
-    .panel:not([data-panel="0"]) .kicker.text-anim,
-    .panel:not([data-panel="0"]) h2.text-anim {
-      margin-top: 5%;
-    }
-
-    .panel[data-panel="5"] h2 {
-      margin-top: 5%;
-    }
-
     .lead.text-anim {
       width: 43%;
     }
@@ -366,6 +361,18 @@
       object-fit: contain;
       border: 0;
       background: transparent;
+    }
+
+    .action-row.scroll-anim {
+      position: relative;
+      left: auto;
+      top: auto;
+      z-index: var(--z, 3);
+      width: 56%;
+      aspect-ratio: auto;
+      background: transparent;
+      border: 0;
+      pointer-events: auto;
     }
 
     .directory-list {
@@ -515,9 +522,9 @@
           <p class="kicker scroll-anim mid text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Interactive HTML</p>
           <h2 class="scroll-anim mid text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Web<br>Portfolio</h2>
           <p class="lead scroll-anim mid text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">既存のスクロール式Webポートフォリオへ遷移。<br>3Dモデル表示があるため、ローカルサーバー経由で見る前提。</p>
-          <div class="action-row">
-            <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">Desktop HTML</a>
-            <a class="button" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html">Auto view</a>
+          <div class="action-row scroll-anim fast" style="--z: 3;" data-in-start="0.61" data-in-end="0.67" data-out-start="1" data-out-end="1" data-from="86" data-to="0">
+            <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">browser</a>
+            <a class="button" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html">browser</a>
           </div>
           <div class="scroll-anim slow" style="--z: 1; --x: 62%; --y: 44%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.26" data-from="48" data-to="-34"></div>
           <div class="scroll-anim mid" style="--z: 1; --x: 75%; --y: 42%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="66" data-to="-42"></div>
@@ -544,9 +551,9 @@
           <p class="kicker scroll-anim mid text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Hardware</p>
           <h2 class="scroll-anim mid text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Virtual<br>Drums</h2>
           <p class="lead scroll-anim mid text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">身体動作とデバイス制作をつなぐハードウェア作品。<br>PDFとWeb本体の両方へ導線を置く。</p>
-          <div class="action-row">
-            <a class="button fill" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="_blank" rel="noopener noreferrer">PDF page</a>
-            <a class="button" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">Open HTML</a>
+          <div class="action-row scroll-anim fast" style="--z: 3;" data-in-start="0.61" data-in-end="0.67" data-out-start="1" data-out-end="1" data-from="86" data-to="0">
+            <a class="button fill" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="_blank" rel="noopener noreferrer">pdf</a>
+            <a class="button" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">browser</a>
           </div>
           <div class="scroll-anim slow" style="--z: 1; --x: 62%; --y: 44%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.26" data-from="48" data-to="-34"></div>
           <div class="scroll-anim mid" style="--z: 1; --x: 75%; --y: 42%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="66" data-to="-42"></div>
@@ -573,9 +580,9 @@
           <p class="kicker scroll-anim mid text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Rig models</p>
           <h2 class="scroll-anim mid text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">2D / 3D<br>Rig</h2>
           <p class="lead scroll-anim mid text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">2Dと3Dの併用、リグモデル、映像表現の領域。<br>白地に黒でプレゼン資料っぽく見せる。</p>
-          <div class="action-row">
-            <a class="button fill" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="_blank" rel="noopener noreferrer">PDF page</a>
-            <a class="button" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">Open HTML</a>
+          <div class="action-row scroll-anim fast" style="--z: 3;" data-in-start="0.61" data-in-end="0.67" data-out-start="1" data-out-end="1" data-from="86" data-to="0">
+            <a class="button fill" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="_blank" rel="noopener noreferrer">pdf</a>
+            <a class="button" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">browser</a>
           </div>
           <div class="scroll-anim slow" style="--z: 1; --x: 62%; --y: 44%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.26" data-from="48" data-to="-34"></div>
           <div class="scroll-anim mid" style="--z: 1; --x: 75%; --y: 42%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="66" data-to="-42"></div>
