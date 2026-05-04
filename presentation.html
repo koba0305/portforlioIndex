@@ -365,9 +365,10 @@
 
     .scroll-anim.model-canvas {
       --size: 60%;
+      --height: 60%;
       --model-y: 20%;
-      height: auto;
-      aspect-ratio: 1 / 1;
+      height: var(--height, 60%);
+      aspect-ratio: auto;
       background: #ff0000;
       border: 0;
       pointer-events: none;
@@ -489,11 +490,6 @@
       }
     }
 
-    @media (min-aspect-ratio: 5 / 4) {
-      .scroll-anim.model-canvas {
-        --model-y: -8%;
-      }
-    }
   </style>
 </head>
 <body>
