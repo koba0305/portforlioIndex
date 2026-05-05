@@ -109,7 +109,7 @@
       position: fixed;
       inset: 0;
       display: flex;
-      width: 600%;
+      width: 700%;
       height: 100%;
       transform: translateX(0);
       transition: transform 720ms cubic-bezier(.76,0,.24,1);
@@ -118,8 +118,8 @@
 
     .panel {
       position: relative;
-      flex: 0 0 16.666666%;
-      width: 16.666666%;
+      flex: 0 0 14.285714%;
+      width: 14.285714%;
       height: 100%;
       overflow: hidden;
       border-right: 0.08vw solid var(--soft);
@@ -204,13 +204,13 @@
     .lead {
       width: 43%;
       margin: -1% 0 0;
-      font-size: 1.35vw;
+      font-size: 1.7vw;
       line-height: 1.75;
-      font-weight: 650;
+      font-weight: 600;
       padding-block: 0.8%;
     }
 
-    .panel[data-panel="4"] .lead {
+    .panel[data-panel="5"] .lead {
       width: 34%;
     }
 
@@ -333,7 +333,7 @@
       width: 43%;
     }
 
-    .panel[data-panel="4"] .lead.text-anim {
+    .panel[data-panel="5"] .lead.text-anim {
       width: 34%;
     }
 
@@ -355,17 +355,22 @@
       --aspect: 0.42 / 1;
     }
 
-       .scroll-anim.mini {
+    .scroll-anim.mini {
       --size: 1.5%;
       --aspect: 0.2 / 1;
     }
+
+    .scroll-anim.midi {
+      --size: 3%;
+      --aspect: 0.24 / 1;
+    }
+
     .scroll-anim.large {
       --size: 10%;
       --aspect: 0.42 / 1;
     }
 
     .scroll-anim.face-scroll {
-      --size: 25.2%;
       height: auto;
       aspect-ratio: auto;
       object-fit: contain;
@@ -532,6 +537,7 @@
     <button class="dot" type="button" data-go="3" aria-label="Go to section 4"></button>
     <button class="dot" type="button" data-go="4" aria-label="Go to section 5"></button>
     <button class="dot" type="button" data-go="5" aria-label="Go to section 6"></button>
+    <button class="dot" type="button" data-go="6" aria-label="Go to section 7"></button>
   </nav>
 
   <main class="deck" aria-live="polite">
@@ -545,7 +551,7 @@
           <div class="scroll-anim slash" id="mid_first" style="--z: 1; --x: 79%; --y: 20%;"></div>
           <div class="scroll-anim white" id="fast_first" style="--z: 1; --x: 89%; --y: 40%;"></div>
           <div class="scroll-anim white mini" id="slow_first" style="--z: 3; --x: 52%; --y: 67%;"></div>
-          <img class="scroll-anim face-scroll" src="./images/face@2x.png" alt="" style="--z: 2; --x: 60%; --y: 25%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="66" data-to="-42">
+          <img class="scroll-anim face-scroll" src="./images/face@2x.png" alt="" style="--z: 2; --x: 60%; --y: 25%; --size: 25.2%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="66" data-to="-42">
           
           <div class="scroll-anim slash" id="slow_second" style="--z: 3; --x: 6%; --y: 12%;"></div>
           <div class="scroll-anim white large" id="mid_second" style="--z: 3; --x: 16%; --y: 12%;"></div>
@@ -576,33 +582,18 @@
     <section class="panel" data-panel="1">
       <div class="panel-scroll">
         <div class="panel-inner">
-          <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Interactive HTML</p>
-          <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Web<br>Portfolio</h2>
-          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Three.jsを用いたWebポートフォリオ<br>使用ソフト: blender / VScode / AdobeIllustrator</p>
-          <div class="action-row scroll-anim" id="fast_third" style="--z: 3;">
-            <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">web pages</a>
-            <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="_blank" rel="noopener noreferrer">pdf pages</a>
-          </div>
-          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 62%; --y: 44%;"></div>
-          <div class="scroll-anim slash" id="mid_first" style="--z: 1; --x: 75%; --y: 42%;"></div>
-          <div class="scroll-anim white" id="fast_first" style="--z: 1; --x: 89%; --y: 40%;"></div>
-          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 66%; --y: 52%;"></div>
-          <div class="scroll-anim slash " id="mid_second" style="--z: 1; --x: 80%; --y: 50%;"></div>
-          <div class="scroll-anim white" id="fast_second" style="--z: 1; --x: 93%; --y: 48%;"></div>
+          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 58%; --y: 30%;"></div>
+          <div class="scroll-anim slash large" id="mid_first" style="--z: 1; --x: 72%; --y: 24%;"></div>
+          <div class="scroll-anim white midi" id="fast_first" style="--z: 1; --x: 88%; --y: 42%;"></div>
+          <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 81%; --y: 68%;"></div>
+          <div class="scroll-anim black mini" id="slow_second" style="--z: 1; --x: 62%; --y: 65%;"></div>
+          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 78%; --y: 50%;"></div>
+          <div class="scroll-anim white large" id="fast_second" style="--z: 1; --x: 92%; --y: 68%;"></div>
+          <div class="scroll-anim slash mini" id="mid_second" style="--z: 1; --x: 67%; --y: 35%;"></div>
           <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 57%; --y: 72%;"></div>
           <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 74%; --y: 49%;"></div>
           <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 90%; --y: 66%;"></div>
           <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 96%; --y: 37%;"></div>
-          <div class="scroll-anim model-wrap" id="fast_third" style="--z: 2; --x: -10%; --y: 7%;" aria-hidden="true">
-            <div class="model-frame">
-              <canvas data-model-viewer="room"></canvas>
-            </div>
-          </div>
-          <div class="scroll-anim black mini" id="slow_third" style="--z: 3; --x: 2%; --y: 23%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 3; --x: 20%; --y: 10%;"></div>
-          <div class="scroll-anim white midi" id="fast_third" style="--z: 3; --x: 47%; --y: 29%;"></div>
-          <div class="scroll-anim black large" id="slow_third" style="--z: 3; --x: 9%; --y: 79%;"></div>
-          <div class="scroll-anim slash mini" id="mid_third" style="--z: 3; --x: 35%; --y: 63%;"></div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
             <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
@@ -616,23 +607,37 @@
     <section class="panel" data-panel="2">
       <div class="panel-scroll">
         <div class="panel-inner">
-          <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Hardware</p>
-          <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Virtual<br>Drums</h2>
-          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">身体動作とデバイス制作をつなぐハードウェア作品。<br>PDFとWeb本体の両方へ導線を置く。</p>
+          <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Interactive HTML</p>
+          <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Web<br>Portfolio</h2>
+          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">記憶に残るポートフォリオ</p>
           <div class="action-row scroll-anim" id="fast_third" style="--z: 3;">
             <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">web pages</a>
-            <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="_blank" rel="noopener noreferrer">pdf pages</a>
+            <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="portfolioPdf" rel="noopener noreferrer">pdf pages</a>
           </div>
-          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 62%; --y: 44%;"></div>
-          <div class="scroll-anim slash" id="mid_first" style="--z: 1; --x: 75%; --y: 42%;"></div>
-          <div class="scroll-anim white" id="fast_first" style="--z: 1; --x: 89%; --y: 40%;"></div>
-          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 66%; --y: 52%;"></div>
-          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 80%; --y: 50%;"></div>
-          <div class="scroll-anim white" id="fast_second" style="--z: 1; --x: 93%; --y: 48%;"></div>
-          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 57%; --y: 72%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 74%; --y: 49%;"></div>
-          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 90%; --y: 66%;"></div>
-          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 96%; --y: 37%;"></div>
+          <div class="scroll-anim slash " id="mid_first" style="--z: 1; --x: 89%; --y: 69%;"></div>
+          <div class="scroll-anim white" id="fast_first" style="--z: 1; --x: 45%; --y: 15%;"></div>
+          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 93%; --y: 28%;"></div>
+                    <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 50%; --y: 33%;"></div>
+          <div class="scroll-anim model-wrap" id="fast_first" style="--z: 2; --x: 22%; --y: 20%;" aria-hidden="true">
+            <div class="model-frame">
+              <canvas data-model-viewer="pc"></canvas>
+            </div>
+          </div>
+          <div class="scroll-anim black mini" id="slow_second" style="--z: 1; --x: 13%; --y: 15%;"></div>
+          <div class="scroll-anim slash " id="mid_second" style="--z: 1; --x: 84%; --y: 65%;"></div>
+          <div class="scroll-anim white" id="fast_second" style="--z: 1; --x: 5%; --y: 18%;"></div>
+          <div class="scroll-anim white large" id="mid_second" style="--z: 1; --x: 87%; --y: 42%;"></div>
+          <div class="scroll-anim model-wrap" id="fast_second" style="--z: 2; --x: -10%; --y: 7%;" aria-hidden="true">
+            <div class="model-frame">
+              <canvas data-model-viewer="room"></canvas>
+            </div>
+          </div>
+          <img class="scroll-anim svg-scroll" src="./images/3Droom.svg" id="fast_second" style="--z: 3; --x: 58%; --y: 34%;--size: 21%;" alt="">
+          
+          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 5%; --y: 26%;"></div>
+          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 21%; --y: 12%;"></div>
+          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 40%; --y: 36%;"></div>
+          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 90%; --y: 66%;"></div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
             <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
@@ -646,23 +651,25 @@
     <section class="panel" data-panel="3">
       <div class="panel-scroll">
         <div class="panel-inner">
-          <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Rig models</p>
-          <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">2D / 3D<br>Rig</h2>
-          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">2Dと3Dの併用、リグモデル、映像表現の領域。<br>白地に黒でプレゼン資料っぽく見せる。</p>
+          <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Hardware</p>
+          <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Virtual<br>Drums</h2>
+          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">身体動作とデバイス制作をつなぐハードウェア作品。<br>PDFとWeb本体の両方へ導線を置く。</p>
           <div class="action-row scroll-anim" id="fast_third" style="--z: 3;">
             <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">web pages</a>
-            <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="_blank" rel="noopener noreferrer">pdf pages</a>
+            <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="portfolioPdf" rel="noopener noreferrer">pdf pages</a>
           </div>
-          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 62%; --y: 44%;"></div>
-          <div class="scroll-anim slash" id="mid_first" style="--z: 1; --x: 75%; --y: 42%;"></div>
-          <div class="scroll-anim white" id="fast_first" style="--z: 1; --x: 89%; --y: 40%;"></div>
-          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 66%; --y: 52%;"></div>
-          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 80%; --y: 50%;"></div>
-          <div class="scroll-anim white" id="fast_second" style="--z: 1; --x: 93%; --y: 48%;"></div>
-          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 57%; --y: 72%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 74%; --y: 49%;"></div>
-          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 90%; --y: 66%;"></div>
-          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 96%; --y: 37%;"></div>
+          <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 60%; --y: 24%;"></div>
+          <div class="scroll-anim slash large" id="mid_first" style="--z: 1; --x: 77%; --y: 35%;"></div>
+          <div class="scroll-anim white midi" id="fast_first" style="--z: 1; --x: 91%; --y: 18%;"></div>
+          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 84%; --y: 61%;"></div>
+          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 56%; --y: 58%;"></div>
+          <div class="scroll-anim slash mini" id="mid_second" style="--z: 1; --x: 72%; --y: 73%;"></div>
+          <div class="scroll-anim white large" id="fast_second" style="--z: 1; --x: 88%; --y: 49%;"></div>
+          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 94%; --y: 70%;"></div>
+          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 59%; --y: 76%;"></div>
+          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 70%; --y: 45%;"></div>
+          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 86%; --y: 69%;"></div>
+          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 93%; --y: 34%;"></div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
             <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
@@ -676,19 +683,25 @@
     <section class="panel" data-panel="4">
       <div class="panel-scroll">
         <div class="panel-inner">
-          <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Others</p>
-          <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Other<br>Works</h2>
-          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">さまざまな制作物。<br>PDFビューアが対応している環境では、ページ指定で各制作領域へ直接開ける。</p>
-          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 62%; --y: 44%;"></div>
-          <div class="scroll-anim slash" id="mid_first" style="--z: 1; --x: 75%; --y: 42%;"></div>
-          <div class="scroll-anim white" id="fast_first" style="--z: 1; --x: 89%; --y: 40%;"></div>
-          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 66%; --y: 52%;"></div>
-          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 80%; --y: 50%;"></div>
-          <div class="scroll-anim white" id="fast_second" style="--z: 1; --x: 93%; --y: 48%;"></div>
-          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 57%; --y: 72%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 74%; --y: 49%;"></div>
-          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 90%; --y: 66%;"></div>
-          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 96%; --y: 37%;"></div>
+          <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Rig models</p>
+          <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">2D / 3D<br>Rig</h2>
+          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">2Dと3Dの併用、リグモデル、映像表現の領域。<br>白地に黒でプレゼン資料っぽく見せる。</p>
+          <div class="action-row scroll-anim" id="fast_third" style="--z: 3;">
+            <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">web pages</a>
+            <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="portfolioPdf" rel="noopener noreferrer">pdf pages</a>
+          </div>
+          <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 54%; --y: 43%;"></div>
+          <div class="scroll-anim slash large" id="mid_first" style="--z: 1; --x: 68%; --y: 19%;"></div>
+          <div class="scroll-anim white midi" id="fast_first" style="--z: 1; --x: 83%; --y: 58%;"></div>
+          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 94%; --y: 31%;"></div>
+          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 58%; --y: 62%;"></div>
+          <div class="scroll-anim slash mini" id="mid_second" style="--z: 1; --x: 74%; --y: 39%;"></div>
+          <div class="scroll-anim white large" id="fast_second" style="--z: 1; --x: 86%; --y: 76%;"></div>
+          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 93%; --y: 52%;"></div>
+          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 61%; --y: 78%;"></div>
+          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 72%; --y: 41%;"></div>
+          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 89%; --y: 62%;"></div>
+          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 95%; --y: 24%;"></div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
             <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
@@ -702,16 +715,44 @@
     <section class="panel" data-panel="5">
       <div class="panel-scroll">
         <div class="panel-inner">
+          <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Others</p>
+          <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Other<br>Works</h2>
+          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">さまざまな制作物。<br>PDFビューアが対応している環境では、ページ指定で各制作領域へ直接開ける。</p>
+          <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 59%; --y: 27%;"></div>
+          <div class="scroll-anim slash large" id="mid_first" style="--z: 1; --x: 76%; --y: 45%;"></div>
+          <div class="scroll-anim white midi" id="fast_first" style="--z: 1; --x: 91%; --y: 22%;"></div>
+          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 85%; --y: 64%;"></div>
+          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 55%; --y: 73%;"></div>
+          <div class="scroll-anim slash mini" id="mid_second" style="--z: 1; --x: 70%; --y: 48%;"></div>
+          <div class="scroll-anim white large" id="fast_second" style="--z: 1; --x: 87%; --y: 78%;"></div>
+          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 94%; --y: 55%;"></div>
+          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 56%; --y: 63%;"></div>
+          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 77%; --y: 36%;"></div>
+          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 88%; --y: 73%;"></div>
+          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 95%; --y: 29%;"></div>
+          <div class="scene-nav" aria-label="Vertical animation scenes">
+            <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
+            <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
+            <button class="scene-jump" type="button" style="--p: 67%;" data-scene="2" aria-label="Scene 3"></button>
+          </div>
+          <div class="rule"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="6">
+      <div class="panel-scroll">
+        <div class="panel-inner">
           <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Index</p>
           <h2>Portfolio<br>Index</h2>
           <p class="lead">Web PortfolioとPDF各ページへの索引</p>
           <div class="directory-list right">
             <a data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop"><strong>Web<br>Portfolio</strong><span>interactive HTML</span></a>
-            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf" target="_blank" rel="noopener noreferrer"><strong>Full<br>PDF</strong><span>all pages</span></a>
-            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="_blank" rel="noopener noreferrer"><strong>Top</strong><span>PDF page 1</span></a>
-            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="_blank" rel="noopener noreferrer"><strong>Hardware</strong><span>PDF page 4</span></a>
-            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="_blank" rel="noopener noreferrer"><strong>Rig</strong><span>PDF page 8</span></a>
-            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=12" target="_blank" rel="noopener noreferrer"><strong>3D</strong><span>PDF page 12</span></a>
+            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf" target="portfolioPdf" rel="noopener noreferrer"><strong>Full<br>PDF</strong><span>all pages</span></a>
+            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="portfolioPdf" rel="noopener noreferrer"><strong>Top</strong><span>PDF page 1</span></a>
+            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="portfolioPdf" rel="noopener noreferrer"><strong>Hardware</strong><span>PDF page 4</span></a>
+            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="portfolioPdf" rel="noopener noreferrer"><strong>Rig</strong><span>PDF page 8</span></a>
+            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=12" target="portfolioPdf" rel="noopener noreferrer"><strong>3D</strong><span>PDF page 12</span></a>
           </div>
           <div class="rule"></div>
         </div>
@@ -850,7 +891,7 @@
       lock = true;
       current = next;
       yLock = false;
-      deck.style.transform = `translateX(-${current * 16.666666}%)`;
+      deck.style.transform = `translateX(-${current * 14.285714}%)`;
       dots.forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === current));
       scrollers[current].scrollTo({ top: 0, left: 0, behavior: "auto" });
       updateScrollAnimation(current);
@@ -991,11 +1032,18 @@
       room: {
         model: "./INDEXportfolioKobayashiYumeLocal/model/heyaportfoliokeiryou.glb",
         wireframe: true,
+        edgeWireframe: false,
       },
       apose: {
         model: "./INDEXportfolioKobayashiYumeLocal/model/Aposeyume.glb",
         wireframe: true,
+        edgeWireframe: false,
       },
+      pc: {
+        model: "./INDEXportfolioKobayashiYumeLocal/model/pc.glb",
+        wireframe: true,
+        edgeWireframe: true,
+      }
     };
 
     const modelViewers = new Map();
@@ -1032,9 +1080,25 @@
       camera.updateProjectionMatrix();
     }
 
-    function makeWireframe(model) {
+    function makeWireframe(model, useEdges = false) {
       model.traverse((child) => {
         if (!child.isMesh) return;
+        if (useEdges) {
+          const edges = new THREE.EdgesGeometry(child.geometry, 30);
+          const line = new THREE.LineSegments(
+            edges,
+            new THREE.LineBasicMaterial({ color: 0x0a0a0a })
+          );
+          child.add(line);
+          child.material = new THREE.MeshBasicMaterial({
+            color: 0xf6f3ed,
+            transparent: true,
+            opacity: 0,
+            depthWrite: false,
+            side: THREE.DoubleSide,
+          });
+          return;
+        }
         child.material = new THREE.MeshBasicMaterial({
           color: 0x0a0a0a,
           wireframe: true,
@@ -1086,10 +1150,10 @@
 
       loader.load(settings.model, (gltf) => {
         const group = new THREE.Group();
-        const model = settings.wireframe ? makeWireframe(gltf.scene) : gltf.scene;
+        const model = settings.wireframe ? makeWireframe(gltf.scene, settings.edgeWireframe) : gltf.scene;
         centerAndScaleModel(model);
         group.add(model);
-        group.rotation.y = 0.3;
+        group.rotation.y = 0.3+ Math.PI;;
         scene.add(group);
         viewer.group = group;
         frameCameraToObject(group, camera);
