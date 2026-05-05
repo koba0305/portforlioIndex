@@ -396,6 +396,12 @@
       pointer-events: none;
     }
 
+    .scroll-anim.model-wrap.mini_canvas {
+      --size: 54%;
+      --height: 54%;
+      height: var(--height, 54%);
+    }
+
     .model-frame {
       position: relative;
       width: 100%;
@@ -409,6 +415,52 @@
       width: 100%;
       height: 100%;
       background: transparent;
+    }
+
+    .model-debug {
+      --size: 31.2%;
+      aspect-ratio: auto;
+      min-height: 32.4%;
+      padding: 1.32%;
+      background: rgba(246, 243, 237, 0.9);
+      border: 0.096vw solid var(--ink);
+      border-radius: 0.5vw;
+      color: var(--ink);
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 0.94vw;
+      line-height: 1.45;
+      pointer-events: none;
+    }
+
+    .model-debug::before {
+      content: "three.js debug";
+      position: absolute;
+      left: -0.096vw;
+      top: -12%;
+      display: block;
+      width: 74%;
+      padding: 2.16% 4.8%;
+      border: 0.096vw solid var(--ink);
+      border-bottom: 0;
+      border-radius: 0.5vw 0.5vw 0 0;
+      background: var(--paper);
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: 1.62vw;
+      line-height: 0.9;
+      letter-spacing: 0;
+    }
+
+    .model-debug strong,
+    .model-debug span {
+      display: block;
+    }
+
+    .model-debug strong {
+      margin-bottom: 4%;
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: 2.64vw;
+      line-height: 0.88;
+      font-weight: 400;
     }
 
     .action-row.scroll-anim {
@@ -633,11 +685,29 @@
             </div>
           </div>
           <img class="scroll-anim svg-scroll" src="./images/3Droom.svg" id="fast_second" style="--z: 3; --x: 58%; --y: 34%;--size: 21%;" alt="">
-          
+           
           <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 5%; --y: 26%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 21%; --y: 12%;"></div>
+          <div class="scroll-anim slash" id="mid_third" style="--z: 1; --x: 60%; --y: 60%;"></div>
           <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 40%; --y: 36%;"></div>
           <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 90%; --y: 66%;"></div>
+          <div class="scroll-anim model-wrap mini_canvas" id="mid_third" style="--z: 2; --x: -8%; --y: 13%;" aria-hidden="true">
+            <div class="model-frame">
+              <canvas data-model-viewer="pc"></canvas>
+            </div>
+          </div>
+          <div class="scroll-anim model-wrap mini_canvas" id="mid_third" style="--z: 2; --x: 15%; --y: 42%;" aria-hidden="true">
+            <div class="model-frame">
+              <canvas data-model-viewer="room"></canvas>
+            </div>
+          </div>
+          <div class="scroll-anim model-debug" id="slow_third" style="--z: 1; --x: 36%; --y: 21%;" data-debug-model="pc">
+            <strong>pc.glb</strong>
+            <span>status: waiting</span>
+          </div>
+          <div class="scroll-anim model-debug" id="slow_third" style="--z: 1; --x: 59%; --y: 45%;" data-debug-model="room">
+            <strong>room.glb</strong>
+            <span>status: waiting</span>
+          </div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
             <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
@@ -1080,6 +1150,42 @@
       camera.updateProjectionMatrix();
     }
 
+    function collectModelStats(model) {
+      const stats = {
+        meshCount: 0,
+        vertexCount: 0,
+        triangleCount: 0,
+      };
+      model.traverse((child) => {
+        if (!child.isMesh || !child.geometry) return;
+        const geometry = child.geometry;
+        const position = geometry.attributes?.position;
+        stats.meshCount += 1;
+        stats.vertexCount += position?.count || 0;
+        stats.triangleCount += geometry.index ? geometry.index.count / 3 : (position?.count || 0) / 3;
+      });
+      return stats;
+    }
+
+    function updateModelDebug(key, viewer, stats, status = "ready") {
+      document.querySelectorAll(`[data-debug-model="${key}"]`).forEach((debug) => {
+        const size = viewer.group
+          ? new THREE.Box3().setFromObject(viewer.group).getSize(new THREE.Vector3())
+          : new THREE.Vector3();
+        debug.innerHTML = `
+          <strong>${key}.glb</strong>
+          <span>status: ${status}</span>
+          <span>mesh: ${stats.meshCount}</span>
+          <span>vertices: ${Math.round(stats.vertexCount).toLocaleString()}</span>
+          <span>triangles: ${Math.round(stats.triangleCount).toLocaleString()}</span>
+          <span>bbox: ${size.x.toFixed(2)} / ${size.y.toFixed(2)} / ${size.z.toFixed(2)}</span>
+          <span>camera.z: ${viewer.camera.position.z.toFixed(2)}</span>
+          <span>rotation.y: ${viewer.group ? viewer.group.rotation.y.toFixed(2) : "0.00"}</span>
+          <span>edge: ${modelSettings[key]?.edgeWireframe ? "on" : "off"}</span>
+        `;
+      });
+    }
+
     function makeWireframe(model, useEdges = false) {
       model.traverse((child) => {
         if (!child.isMesh) return;
@@ -1122,6 +1228,7 @@
     function animateViewer(viewer) {
       requestAnimationFrame(() => animateViewer(viewer));
       if (viewer.group) viewer.group.rotation.y += 0.006;
+      if (viewer.debugKey && viewer.stats) updateModelDebug(viewer.debugKey, viewer, viewer.stats);
       viewer.renderer.render(viewer.scene, viewer.camera);
     }
 
@@ -1150,14 +1257,21 @@
 
       loader.load(settings.model, (gltf) => {
         const group = new THREE.Group();
+        const stats = collectModelStats(gltf.scene);
         const model = settings.wireframe ? makeWireframe(gltf.scene, settings.edgeWireframe) : gltf.scene;
         centerAndScaleModel(model);
         group.add(model);
         group.rotation.y = 0.3+ Math.PI;;
         scene.add(group);
         viewer.group = group;
+        viewer.debugKey = key;
+        viewer.stats = stats;
         frameCameraToObject(group, camera);
+        updateModelDebug(key, viewer, stats);
       }, undefined, (error) => {
+        document.querySelectorAll(`[data-debug-model="${key}"]`).forEach((debug) => {
+          debug.innerHTML = `<strong>${key}.glb</strong><span>status: error</span>`;
+        });
         console.error("presentation model load failed", settings.model, error);
       });
 
