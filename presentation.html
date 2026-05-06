@@ -463,6 +463,25 @@
       font-weight: 400;
     }
 
+    .model-debug.three-title {
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .model-debug.three-title::before {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .model-debug.three-title strong {
+      margin: 0;
+      font-size: 7.6vw;
+      line-height: 0.8;
+    }
+
     .action-row.scroll-anim {
       position: relative;
       left: auto;
@@ -675,7 +694,7 @@
               <canvas data-model-viewer="pc"></canvas>
             </div>
           </div>
-          <div class="scroll-anim black mini" id="slow_second" style="--z: 1; --x: 13%; --y: 15%;"></div>
+          <div class="scroll-anim slash mini" id="slow_second" style="--z: 1; --x: 13%; --y: 15%;"></div>
           <div class="scroll-anim slash " id="mid_second" style="--z: 1; --x: 84%; --y: 65%;"></div>
           <div class="scroll-anim white" id="fast_second" style="--z: 1; --x: 5%; --y: 18%;"></div>
           <div class="scroll-anim white large" id="mid_second" style="--z: 1; --x: 87%; --y: 42%;"></div>
@@ -684,7 +703,7 @@
               <canvas data-model-viewer="room"></canvas>
             </div>
           </div>
-          <img class="scroll-anim svg-scroll" src="./images/3Droom.svg" id="fast_second" style="--z: 3; --x: 58%; --y: 34%;--size: 21%;" alt="">
+          <img class="scroll-anim svg-scroll" src="./images/3Droom.svg" id="fast_second" style="--z: 3; --x: 58%; --y: 46%;--size: 28%;" alt="">
            
           <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 5%; --y: 26%;"></div>
           <div class="scroll-anim slash" id="mid_third" style="--z: 1; --x: 60%; --y: 60%;"></div>
@@ -695,18 +714,12 @@
               <canvas data-model-viewer="pc"></canvas>
             </div>
           </div>
-          <div class="scroll-anim model-wrap mini_canvas" id="mid_third" style="--z: 2; --x: 15%; --y: 42%;" aria-hidden="true">
-            <div class="model-frame">
-              <canvas data-model-viewer="room"></canvas>
-            </div>
-          </div>
           <div class="scroll-anim model-debug" id="slow_third" style="--z: 1; --x: 36%; --y: 21%;" data-debug-model="pc">
             <strong>pc.glb</strong>
             <span>status: waiting</span>
           </div>
-          <div class="scroll-anim model-debug" id="slow_third" style="--z: 1; --x: 59%; --y: 45%;" data-debug-model="room">
-            <strong>room.glb</strong>
-            <span>status: waiting</span>
+          <div class="scroll-anim model-debug three-title" id="slow_third" style="--z: 1; --x: 59%; --y: 45%;">
+            <strong>three.js</strong>
           </div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
@@ -723,7 +736,7 @@
         <div class="panel-inner">
           <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Hardware</p>
           <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Virtual<br>Drums</h2>
-          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">身体動作とデバイス制作をつなぐハードウェア作品。<br>PDFとWeb本体の両方へ導線を置く。</p>
+          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">非接触で演奏できる電子ドラム</p>
           <div class="action-row scroll-anim" id="fast_third" style="--z: 3;">
             <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">web pages</a>
             <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="portfolioPdf" rel="noopener noreferrer">pdf pages</a>
@@ -740,6 +753,11 @@
           <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 70%; --y: 45%;"></div>
           <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 86%; --y: 69%;"></div>
           <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 93%; --y: 34%;"></div>
+          <div class="scroll-anim model-wrap" id="slow_third" style="--z: 2; --x: -10%; --y: 7%;" aria-hidden="true">
+            <div class="model-frame">
+              <canvas data-model-viewer="gloves"></canvas>
+            </div>
+          </div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
             <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
@@ -1113,6 +1131,11 @@
         model: "./INDEXportfolioKobayashiYumeLocal/model/pc.glb",
         wireframe: true,
         edgeWireframe: true,
+      },
+      gloves: {
+        model: "./INDEXportfolioKobayashiYumeLocal/model/gloves.glb",
+        wireframe: true,
+        edgeWireframe: false,
       }
     };
 
