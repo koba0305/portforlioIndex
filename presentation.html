@@ -146,6 +146,11 @@
       height: 1920%;
     }
 
+    .panel[data-panel="1"] .panel-scroll::after,
+    .panel[data-panel="6"] .panel-scroll::after {
+      height: 0;
+    }
+
     .panel-inner {
       position: sticky;
       top: 0;
@@ -378,6 +383,31 @@
       background: transparent;
     }
 
+    .float-wrap {
+      height: auto;
+      aspect-ratio: auto;
+      border: 0;
+      background: transparent;
+    }
+
+    .float-inner {
+      display: block;
+      width: 100%;
+      height: auto;
+      animation: floatY 7s ease-in-out infinite;
+      animation-delay: var(--float-delay, 0s);
+    }
+
+    @keyframes floatY {
+      0%,
+      100% {
+        transform: translateY(-1%) rotate(var(--float-rotate, 0deg));
+      }
+      50% {
+        transform: translateY(1%) rotate(var(--float-rotate, 0deg));
+      }
+    }
+
     .scroll-anim.svg-scroll {
       height: auto;
       aspect-ratio: auto;
@@ -386,20 +416,58 @@
       background: transparent;
     }
 
-    .scroll-anim.model-wrap {
-      --size: 90%;
-      --height: 90%;
-      height: var(--height, 90%);
+    .scroll-anim.pen-motion {
+      height: auto;
       aspect-ratio: auto;
+      border: 0;
+      background: transparent;
+      overflow: visible;
+    }
+
+    .pen-motion .pen-orbit {
+      display: block;
+      width: 100%;
+      height: 100%;
+      animation: penOrbit var(--pen-speed, 4.8s) linear infinite;
+      transform-origin: 50% 50%;
+    }
+
+    .pen-motion img {
+      display: block;
+      width: 100%;
+      height: auto;
+      animation: penCounterOrbit var(--pen-speed, 4.8s) linear infinite;
+      transform-origin: 50% 50%;
+    }
+
+    @keyframes penOrbit {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes penCounterOrbit {
+      0% {
+        transform: translateX(var(--pen-radius, 18%)) rotate(0deg);
+      }
+      100% {
+        transform: translateX(var(--pen-radius, 18%)) rotate(-360deg);
+      }
+    }
+
+    .scroll-anim.model-wrap {
+      --size: 60%;
+      aspect-ratio: var(--aspect, 1 / 1);
       background: transparent;
       border: 0;
       pointer-events: none;
     }
 
     .scroll-anim.model-wrap.mini_canvas {
-      --size: 54%;
-      --height: 54%;
-      height: var(--height, 54%);
+      --size: 36%;
     }
 
     .model-frame {
@@ -485,7 +553,7 @@
     .action-row.scroll-anim {
       position: relative;
       left: auto;
-      top: auto;
+      top: var(--button-y, auto);
       z-index: var(--z, 3);
       width: 56%;
       aspect-ratio: auto;
@@ -627,7 +695,7 @@
           <div class="scroll-anim slash" id="slow_second" style="--z: 3; --x: 6%; --y: 12%;"></div>
           <div class="scroll-anim white large" id="mid_second" style="--z: 3; --x: 16%; --y: 12%;"></div>
           <div class="scroll-anim black mini" id="fast_second" style="--z: 3; --x: 12%; --y: 60%;"></div>
-          <div class="scroll-anim model-wrap" id="fast_second" style="--z: 2; --x: -10%; --y: 7%;" aria-hidden="true">
+          <div class="scroll-anim model-wrap" id="fast_second" style="--z: 2; --x: 5%; --y: 7%; --size: 60%;" aria-hidden="true">
             <div class="model-frame">
               <canvas data-model-viewer="apose"></canvas>
             </div>
@@ -637,10 +705,20 @@
           <img class="scroll-anim svg-scroll" src="./images/Foot_3.svg" id="fast_second" style="--z: 3; --x: 36%; --y: 68%;--size: 47%;" alt="">
           
          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 58%; --y: 71%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 73%; --y: 50%;"></div>
+          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 73%; --y: 52%;"></div>
           <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 88%; --y: 64%;"></div>
-          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 95%; --y: 38%;"></div>
+          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 93%; --y: 38%;"></div>
           <div class="rule"></div>
+          <div class="scroll-anim svg-scroll float-wrap" id="fast_third" style="--z: 3; --x: 13%; --y: 21%; --size: 35%; --float-rotate: 15deg;">
+            <img class="float-inner" src="./images/3DS.svg" alt="">
+          </div>
+          <div class="scroll-anim pen-motion" id="fast_third" style="--z: 4; --x: 31%; --y: 29%; --size: 18%; --pen-radius: 10%; --pen-speed: 4.8s;">
+            <span class="pen-orbit">
+              <img src="./images/pen.svg" alt="">
+            </span>
+          </div>
+          <img class="scroll-anim svg-scroll" src="./images/origin.svg" id="fast_third" style="--z: 3; --x: 48%; --y: 26%;--size: 40%;" alt="">
+          
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
             <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
@@ -657,20 +735,6 @@
           <div class="scroll-anim slash large" id="mid_first" style="--z: 1; --x: 72%; --y: 24%;"></div>
           <div class="scroll-anim white midi" id="fast_first" style="--z: 1; --x: 88%; --y: 42%;"></div>
           <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 81%; --y: 68%;"></div>
-          <div class="scroll-anim black mini" id="slow_second" style="--z: 1; --x: 62%; --y: 65%;"></div>
-          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 78%; --y: 50%;"></div>
-          <div class="scroll-anim white large" id="fast_second" style="--z: 1; --x: 92%; --y: 68%;"></div>
-          <div class="scroll-anim slash mini" id="mid_second" style="--z: 1; --x: 67%; --y: 35%;"></div>
-          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 57%; --y: 72%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 74%; --y: 49%;"></div>
-          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 90%; --y: 66%;"></div>
-          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 96%; --y: 37%;"></div>
-          <div class="scene-nav" aria-label="Vertical animation scenes">
-            <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
-            <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
-            <button class="scene-jump" type="button" style="--p: 67%;" data-scene="2" aria-label="Scene 3"></button>
-          </div>
-          <div class="rule"></div>
         </div>
       </div>
     </section>
@@ -681,7 +745,7 @@
           <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Interactive HTML</p>
           <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Web<br>Portfolio</h2>
           <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">記憶に残るポートフォリオ</p>
-          <div class="action-row scroll-anim" id="fast_third" style="--z: 3;">
+          <div class="action-row scroll-anim" id="fast_second" style="--z: 3; --button-y: 10%;">
             <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">web pages</a>
             <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="portfolioPdf" rel="noopener noreferrer">pdf pages</a>
           </div>
@@ -689,42 +753,31 @@
           <div class="scroll-anim white" id="fast_first" style="--z: 1; --x: 45%; --y: 15%;"></div>
           <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 93%; --y: 28%;"></div>
                     <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 50%; --y: 33%;"></div>
-          <div class="scroll-anim model-wrap" id="fast_first" style="--z: 2; --x: 22%; --y: 20%;" aria-hidden="true">
+          <div class="scroll-anim model-wrap" id="fast_first" style="--z: 2; --x: 37%; --y: 20%; --size: 60%;" aria-hidden="true">
             <div class="model-frame">
               <canvas data-model-viewer="pc"></canvas>
             </div>
           </div>
-          <div class="scroll-anim slash mini" id="slow_second" style="--z: 1; --x: 13%; --y: 15%;"></div>
-          <div class="scroll-anim slash " id="mid_second" style="--z: 1; --x: 84%; --y: 65%;"></div>
-          <div class="scroll-anim white" id="fast_second" style="--z: 1; --x: 5%; --y: 18%;"></div>
-          <div class="scroll-anim white large" id="mid_second" style="--z: 1; --x: 87%; --y: 42%;"></div>
-          <div class="scroll-anim model-wrap" id="fast_second" style="--z: 2; --x: -10%; --y: 7%;" aria-hidden="true">
-            <div class="model-frame">
-              <canvas data-model-viewer="room"></canvas>
-            </div>
-          </div>
-          <img class="scroll-anim svg-scroll" src="./images/3Droom.svg" id="fast_second" style="--z: 3; --x: 58%; --y: 46%;--size: 28%;" alt="">
-           
-          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 5%; --y: 26%;"></div>
-          <div class="scroll-anim slash" id="mid_third" style="--z: 1; --x: 60%; --y: 60%;"></div>
-          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 40%; --y: 36%;"></div>
-          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 90%; --y: 66%;"></div>
-          <div class="scroll-anim model-wrap mini_canvas" id="mid_third" style="--z: 2; --x: -8%; --y: 13%;" aria-hidden="true">
+          
+          <div class="scroll-anim black mini" id="slow_second" style="--z: 1; --x: 5%; --y: 26%;"></div>
+          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 60%; --y: 60%;"></div>
+          <div class="scroll-anim white midi" id="fast_second" style="--z: 1; --x: 40%; --y: 36%;"></div>
+          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 90%; --y: 66%;"></div>
+          <div class="scroll-anim model-wrap mini_canvas" id="mid_second" style="--z: 2; --x: 8%; --y: 10%; --size: 36%;" aria-hidden="true">
             <div class="model-frame">
               <canvas data-model-viewer="pc"></canvas>
             </div>
           </div>
-          <div class="scroll-anim model-debug" id="slow_third" style="--z: 1; --x: 36%; --y: 21%;" data-debug-model="pc">
+          <div class="scroll-anim model-debug" id="slow_second" style="--z: 1; --x: 36%; --y: 21%;" data-debug-model="pc">
             <strong>pc.glb</strong>
             <span>status: waiting</span>
           </div>
-          <div class="scroll-anim model-debug three-title" id="slow_third" style="--z: 1; --x: 59%; --y: 45%;">
+          <div class="scroll-anim model-debug three-title" id="slow_second" style="--z: 1; --x: 59%; --y: 45%;">
             <strong>three.js</strong>
           </div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
-            <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
-            <button class="scene-jump" type="button" style="--p: 67%;" data-scene="2" aria-label="Scene 3"></button>
+            <button class="scene-jump" type="button" style="--p: 100%;" data-scene="1" aria-label="Scene 2"></button>
           </div>
           <div class="rule"></div>
         </div>
@@ -737,31 +790,32 @@
           <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Hardware</p>
           <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Virtual<br>Drums</h2>
           <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">非接触で演奏できる電子ドラム</p>
-          <div class="action-row scroll-anim" id="fast_third" style="--z: 3;">
-            <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">web pages</a>
+          <div class="action-row scroll-anim" id="fast_second" style="--z: 3; --button-y: 10%;">
+            <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop&modal=modal2">web pages</a>
             <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="portfolioPdf" rel="noopener noreferrer">pdf pages</a>
           </div>
           <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 60%; --y: 24%;"></div>
-          <div class="scroll-anim slash large" id="mid_first" style="--z: 1; --x: 77%; --y: 35%;"></div>
-          <div class="scroll-anim white midi" id="fast_first" style="--z: 1; --x: 91%; --y: 18%;"></div>
+          <div class="scroll-anim white large" id="mid_first" style="--z: 1; --x: 79%; --y: 35%;"></div>
+          <div class="scroll-anim slash midi" id="fast_first" style="--z: 1; --x: 91%; --y: 18%;"></div>
           <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 84%; --y: 61%;"></div>
-          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 56%; --y: 58%;"></div>
-          <div class="scroll-anim slash mini" id="mid_second" style="--z: 1; --x: 72%; --y: 73%;"></div>
-          <div class="scroll-anim white large" id="fast_second" style="--z: 1; --x: 88%; --y: 49%;"></div>
-          <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 94%; --y: 70%;"></div>
-          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 59%; --y: 76%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 70%; --y: 45%;"></div>
-          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 86%; --y: 69%;"></div>
-          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 93%; --y: 34%;"></div>
-          <div class="scroll-anim model-wrap" id="slow_third" style="--z: 2; --x: -10%; --y: 7%;" aria-hidden="true">
+          <div class="scroll-anim face-scroll float-wrap" id="mid_first" style="--z: 2; --x: 26%; --y: 13%; --size: 72%;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="66" data-to="-42">
+            <img class="float-inner" src="./images/drum.png" alt="">
+          </div>
+          
+          <div class="scroll-anim black mini" id="slow_second" style="--z: 1; --x: 59%; --y: 76%;"></div>
+          <div class="scroll-anim white large" id="mid_second" style="--z: 1; --x: 70%; --y: 45%;"></div>
+          <div class="scroll-anim slash midi" id="fast_second" style="--z: 1; --x: 86%; --y: 69%;"></div>
+          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 93%; --y: 34%;"></div>
+          <div class="scroll-anim model-wrap" id="slow_second" style="--z: 2; --x: 35%; --y: 5%; --size: 60%;" aria-hidden="true">
             <div class="model-frame">
               <canvas data-model-viewer="gloves"></canvas>
             </div>
           </div>
+          <img class="scroll-anim svg-scroll" src="./images/glove.svg" id="fast_second" style="--z: 3; --x: 14%; --y: 25%;--size: 47%;" alt="">
+          
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
-            <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
-            <button class="scene-jump" type="button" style="--p: 67%;" data-scene="2" aria-label="Scene 3"></button>
+            <button class="scene-jump" type="button" style="--p: 100%;" data-scene="1" aria-label="Scene 2"></button>
           </div>
           <div class="rule"></div>
         </div>
@@ -773,27 +827,32 @@
         <div class="panel-inner">
           <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Rig models</p>
           <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">2D / 3D<br>Rig</h2>
-          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">2Dと3Dの併用、リグモデル、映像表現の領域。<br>白地に黒でプレゼン資料っぽく見せる。</p>
-          <div class="action-row scroll-anim" id="fast_third" style="--z: 3;">
-            <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop">web pages</a>
-            <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="portfolioPdf" rel="noopener noreferrer">pdf pages</a>
+          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">2D3D併用リグモデル、映像、グリッチ表現</p>
+          <div class="action-row scroll-anim" id="fast_second" style="--z: 3; --button-y: 10%;">
+            <a class="button fill" data-transition href="./INDEXportfolioKobayashiYumeLocal/index.html?view=desktop&modal=modal4">web pages</a>
+            <a class="button" href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=13" target="portfolioPdf" rel="noopener noreferrer">pdf pages</a>
           </div>
-          <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 54%; --y: 43%;"></div>
-          <div class="scroll-anim slash large" id="mid_first" style="--z: 1; --x: 68%; --y: 19%;"></div>
-          <div class="scroll-anim white midi" id="fast_first" style="--z: 1; --x: 83%; --y: 58%;"></div>
-          <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 94%; --y: 31%;"></div>
-          <div class="scroll-anim black" id="slow_second" style="--z: 1; --x: 58%; --y: 62%;"></div>
-          <div class="scroll-anim slash mini" id="mid_second" style="--z: 1; --x: 74%; --y: 39%;"></div>
-          <div class="scroll-anim white large" id="fast_second" style="--z: 1; --x: 86%; --y: 76%;"></div>
+          <div class="scroll-anim white" id="slow_first" style="--z: 1; --x: 40%; --y: 17%;"></div>
+          <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 54%; --y: 70%;"></div>
+          <div class="scroll-anim white large" id="fast_first" style="--z: 1; --x: 83%; --y: 60%;"></div>
+          <div class="scroll-anim slash mini" id="slow_first" style="--z: 1; --x: 94%; --y: 31%;"></div>
+          <div class="scroll-anim svg-scroll float-wrap" id="fast_first" style="--z: 3; --x: 50%; --y: 17%; --size: 33%;">
+            <img class="float-inner" src="./images/yamu.png" alt="">
+          </div>
+          
+          <img class="scroll-anim svg-scroll" src="./images/rig.png" id="fast_second" style="--z: 3; --x: 10%; --y: 23%;--size: 47%;" alt="">
+          <div class="scroll-anim model-wrap" id="fast_second" style="--z: 2; --x: 45%; --y: -2%; --size: 60%;" aria-hidden="true">
+            <div class="model-frame">
+              <canvas data-model-viewer="face"></canvas>
+            </div>
+          </div>
+          <div class="scroll-anim white" id="slow_second" style="--z: 1; --x: 58%; --y: 66%;"></div>
+          <div class="scroll-anim black mini" id="mid_second" style="--z: 1; --x: 57%; --y: 21%;"></div>
+          <div class="scroll-anim white large" id="fast_second" style="--z: 1; --x: 86%; --y: 6%;"></div>
           <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 93%; --y: 52%;"></div>
-          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 61%; --y: 78%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 72%; --y: 41%;"></div>
-          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 89%; --y: 62%;"></div>
-          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 95%; --y: 24%;"></div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
-            <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
-            <button class="scene-jump" type="button" style="--p: 67%;" data-scene="2" aria-label="Scene 3"></button>
+            <button class="scene-jump" type="button" style="--p: 100%;" data-scene="1" aria-label="Scene 2"></button>
           </div>
           <div class="rule"></div>
         </div>
@@ -805,7 +864,7 @@
         <div class="panel-inner">
           <p class="kicker scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="12" data-to="-20">Others</p>
           <h2 class="scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">Other<br>Works</h2>
-          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">さまざまな制作物。<br>PDFビューアが対応している環境では、ページ指定で各制作領域へ直接開ける。</p>
+          <p class="lead scroll-anim text-anim" style="--z: 3;" data-in-start="-0.08" data-in-end="0" data-out-start="0.16" data-out-end="0.25" data-from="24" data-to="-30">色々な制作物</p>
           <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 59%; --y: 27%;"></div>
           <div class="scroll-anim slash large" id="mid_first" style="--z: 1; --x: 76%; --y: 45%;"></div>
           <div class="scroll-anim white midi" id="fast_first" style="--z: 1; --x: 91%; --y: 22%;"></div>
@@ -814,14 +873,9 @@
           <div class="scroll-anim slash mini" id="mid_second" style="--z: 1; --x: 70%; --y: 48%;"></div>
           <div class="scroll-anim white large" id="fast_second" style="--z: 1; --x: 87%; --y: 78%;"></div>
           <div class="scroll-anim slash" id="mid_second" style="--z: 1; --x: 94%; --y: 55%;"></div>
-          <div class="scroll-anim black mini" id="slow_third" style="--z: 1; --x: 56%; --y: 63%;"></div>
-          <div class="scroll-anim slash large" id="mid_third" style="--z: 1; --x: 77%; --y: 36%;"></div>
-          <div class="scroll-anim white midi" id="fast_third" style="--z: 1; --x: 88%; --y: 73%;"></div>
-          <div class="scroll-anim black" id="slow_third" style="--z: 1; --x: 95%; --y: 29%;"></div>
           <div class="scene-nav" aria-label="Vertical animation scenes">
             <button class="scene-jump is-active" type="button" style="--p: 0%;" data-scene="0" aria-label="Scene 1"></button>
-            <button class="scene-jump" type="button" style="--p: 34%;" data-scene="1" aria-label="Scene 2"></button>
-            <button class="scene-jump" type="button" style="--p: 67%;" data-scene="2" aria-label="Scene 3"></button>
+            <button class="scene-jump" type="button" style="--p: 100%;" data-scene="1" aria-label="Scene 2"></button>
           </div>
           <div class="rule"></div>
         </div>
@@ -839,10 +893,9 @@
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf" target="portfolioPdf" rel="noopener noreferrer"><strong>Full<br>PDF</strong><span>all pages</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=1" target="portfolioPdf" rel="noopener noreferrer"><strong>Top</strong><span>PDF page 1</span></a>
             <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=4" target="portfolioPdf" rel="noopener noreferrer"><strong>Hardware</strong><span>PDF page 4</span></a>
-            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=8" target="portfolioPdf" rel="noopener noreferrer"><strong>Rig</strong><span>PDF page 8</span></a>
-            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=12" target="portfolioPdf" rel="noopener noreferrer"><strong>3D</strong><span>PDF page 12</span></a>
+            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=13" target="portfolioPdf" rel="noopener noreferrer"><strong>Rig</strong><span>PDF page 13</span></a>
+            <a href="./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf#page=10" target="portfolioPdf" rel="noopener noreferrer"><strong>3D</strong><span>PDF page 10</span></a>
           </div>
-          <div class="rule"></div>
         </div>
       </div>
     </section>
@@ -867,8 +920,8 @@
     let touchStartY = 0;
     let pdfWarmStarted = false;
     const pdfHref = "./INDEXportfolioKobayashiYumeLocal/model/portfolio_KobayashiYume.pdf";
-    const ySnapPoints = [0, 0.34, 0.67];
-    const scenePoints = [0, 0.34, 0.67];
+    const fullScenePoints = [0, 0.34, 0.67];
+    const shortScenePoints = [0, 0.34];
     let scrollAnimFrame = 0;
     const scrollAnimPresets = {
       slow_first: { inStart: -0.08, inEnd: 0, outStart: 0.15, outEnd: 0.24, from: 48, to: -34, delayMs: 100 },
@@ -882,17 +935,74 @@
       fast_third: { inStart: 0.61, inEnd: 0.67, outStart: 1, outEnd: 1, from: 86, to: 0 },
     };
 
+    function currentScrollRatio() {
+      const scroller = scrollers[current];
+      if (!scroller) return 0;
+      const max = Math.max(scroller.scrollHeight - scroller.clientHeight, 1);
+      return Math.min(scroller.scrollTop / max, 1);
+    }
+
+    function writePresentationState() {
+      const params = new URLSearchParams();
+      params.set("panel", String(current));
+      params.set("y", currentScrollRatio().toFixed(3));
+      history.replaceState(null, "", `${location.pathname}${location.search}#${params.toString()}`);
+    }
+
+    function readPresentationState() {
+      const params = new URLSearchParams(location.hash.replace(/^#/, ""));
+      return {
+        panel: clamp(Number(params.get("panel") || 0), 0, panels.length - 1),
+        y: clamp(Number(params.get("y") || 0), 0, 1),
+      };
+    }
+
+    function restorePresentationState() {
+      const state = readPresentationState();
+      current = state.panel;
+      deck.style.transform = `translateX(-${current * 14.285714}%)`;
+      dots.forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === current));
+      requestAnimationFrame(() => {
+        const scroller = scrollers[current];
+        const max = Math.max(scroller.scrollHeight - scroller.clientHeight, 1);
+        scroller.scrollTo({ top: max * state.y, left: 0, behavior: "auto" });
+        updateScrollAnimation(current);
+        writePresentationState();
+      });
+    }
+
+    function panelSceneLimit(index) {
+      if (["1", "6"].includes(panels[index]?.dataset.panel)) return 0;
+      return panels[index]?.dataset.panel === "0" ? 1 : 0.34;
+    }
+
+    function panelScenePoints(index) {
+      if (["1", "6"].includes(panels[index]?.dataset.panel)) return [0];
+      return panels[index]?.dataset.panel === "0" ? fullScenePoints : shortScenePoints;
+    }
+
+    function physicalToSceneRatio(index, ratio) {
+      return Math.min(ratio * panelSceneLimit(index), panelSceneLimit(index));
+    }
+
+    function sceneToPhysicalRatio(index, point) {
+      if (panelSceneLimit(index) === 0) return 0;
+      return clamp(point / panelSceneLimit(index), 0, 1);
+    }
+
     function updateScrollAnimation(index) {
       const scroller = scrollers[index];
       const panel = panels[index];
       const max = Math.max(scroller.scrollHeight - scroller.clientHeight, 1);
-      const ratio = Math.min(scroller.scrollTop / max, 1);
-      panel.style.setProperty("--scroll-scale", String(0.14 + ratio * 0.86));
+      const physicalRatio = Math.min(scroller.scrollTop / max, 1);
+      const ratio = physicalToSceneRatio(index, physicalRatio);
+      panel.style.setProperty("--scroll-scale", String(0.14 + physicalRatio * 0.86));
       panel.querySelectorAll(".scroll-anim").forEach((item) => {
         applyScrollAnim(item, ratio);
       });
       panel.querySelectorAll(".scene-jump").forEach((item) => {
-        const point = scenePoints[Number(item.dataset.scene || 0)] ?? 0;
+        const points = panelScenePoints(index);
+        const point = points[Number(item.dataset.scene || 0)] ?? 0;
         item.classList.toggle("is-active", Math.abs(point - ratio) < 0.12);
       });
     }
@@ -983,6 +1093,7 @@
       dots.forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === current));
       scrollers[current].scrollTo({ top: 0, left: 0, behavior: "auto" });
       updateScrollAnimation(current);
+      writePresentationState();
       if (current >= 4) warmPdfCache();
       window.setTimeout(() => {
         xIntent = 0;
@@ -996,21 +1107,23 @@
       if (yLock) return;
       const scroller = scrollers[current];
       const max = Math.max(scroller.scrollHeight - scroller.clientHeight, 1);
-      const ratio = scroller.scrollTop / max;
-      let target = ySnapPoints[ySnapPoints.length - 1];
+      const ratio = physicalToSceneRatio(current, scroller.scrollTop / max);
+      const points = panelScenePoints(current);
+      let target = points[points.length - 1];
       if (direction > 0) {
-        target = ySnapPoints.find((point) => point > ratio + 0.04) ?? ySnapPoints[ySnapPoints.length - 1];
+        target = points.find((point) => point > ratio + 0.04) ?? points[points.length - 1];
       } else {
-        target = [...ySnapPoints].reverse().find((point) => point < ratio - 0.04) ?? 0;
+        target = [...points].reverse().find((point) => point < ratio - 0.04) ?? 0;
       }
       yLock = true;
       yGestureLocked = true;
       yIntent = 0;
-      scroller.scrollTo({ top: max * target, left: 0, behavior: "smooth" });
+      scroller.scrollTo({ top: max * sceneToPhysicalRatio(current, target), left: 0, behavior: "smooth" });
       scheduleYGestureUnlock();
       window.setTimeout(() => {
         yLock = false;
         updateScrollAnimation(current);
+        writePresentationState();
       }, 220);
     }
 
@@ -1020,11 +1133,12 @@
       yLock = true;
       yGestureLocked = true;
       yIntent = 0;
-      scroller.scrollTo({ top: max * point, left: 0, behavior: "smooth" });
+      scroller.scrollTo({ top: max * sceneToPhysicalRatio(current, point), left: 0, behavior: "smooth" });
       scheduleYGestureUnlock();
       window.setTimeout(() => {
         yLock = false;
         updateScrollAnimation(current);
+        writePresentationState();
       }, 220);
     }
 
@@ -1046,12 +1160,16 @@
     });
 
     scrollers.forEach((scroller, index) => {
-      scroller.addEventListener("scroll", () => updateScrollAnimation(index), { passive: true });
+      scroller.addEventListener("scroll", () => {
+        updateScrollAnimation(index);
+        if (index === current) writePresentationState();
+      }, { passive: true });
     });
 
     document.querySelectorAll(".scene-jump").forEach((button) => {
       button.addEventListener("click", () => {
-        const point = scenePoints[Number(button.dataset.scene || 0)] ?? 0;
+        const points = panelScenePoints(current);
+        const point = points[Number(button.dataset.scene || 0)] ?? 0;
         jumpVertical(point);
       });
     });
@@ -1096,14 +1214,25 @@
       link.addEventListener("click", (event) => {
         if (event.metaKey || event.ctrlKey || event.shiftKey) return;
         event.preventDefault();
+        writePresentationState();
+        const target = new URL(link.href);
+        target.searchParams.set("return", location.href);
         cover.classList.add("is-active");
         window.setTimeout(() => {
-          window.location.href = link.href;
-        }, 430);
+          window.location.href = target.href;
+        }, 1150);
+        window.setTimeout(() => {
+          cover.classList.remove("is-active");
+        }, 1800);
       });
     });
 
-    updateScrollAnimation(0);
+    window.addEventListener("pageshow", () => {
+      cover.classList.remove("is-active");
+    });
+
+    restorePresentationState();
+    warmPdfCache();
   </script>
   <script type="importmap">
     {
@@ -1136,7 +1265,13 @@
         model: "./INDEXportfolioKobayashiYumeLocal/model/gloves.glb",
         wireframe: true,
         edgeWireframe: false,
+      },
+      face: {
+        model: "./INDEXportfolioKobayashiYumeLocal/model/yamu3Dkubi.glb",
+        wireframe: true,
+        edgeWireframe: false,
       }
+      
     };
 
     const modelViewers = new Map();

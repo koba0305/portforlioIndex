@@ -66,6 +66,36 @@
       pointer-events: none;
     }
 
+    video.modal-canvas {
+      display: block;
+      width: 45vw;
+      height: 45vw;
+      object-fit: contain;
+      background: transparent;
+    }
+
+    .video-sound-toggle {
+      position: absolute;
+      top: calc(6% + 47vw);
+      left: 10%;
+      z-index: 20;
+      padding: 1vh 2vw;
+      border: 0.12vw solid white;
+      border-radius: 999vw;
+      background: rgba(0, 0, 0, 0.45);
+      color: white;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.5vw;
+      line-height: 1;
+      letter-spacing: 0;
+      cursor: pointer;
+    }
+
+    .video-sound-toggle.is-on {
+      background: white;
+      color: black;
+    }
+
     .scroll-label {
       position: fixed;
       left: 50%;
@@ -156,7 +186,7 @@
   height: 100vh; 
   height: 100svh;
   height: 100dvh;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.86);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -262,7 +292,7 @@
   position: absolute;
   left: 53vw;
   top: 19vh;
-  width: clamp(440px, 56vmin, 760px);
+  width: 34vw;
   z-index: 8;
 }
 .modal2-image {
@@ -272,6 +302,8 @@
   height: auto;
   pointer-events: auto;
   cursor: pointer;
+  left: 10%;
+  top: 30%;
 }
 .modal2-text {
   position: absolute;
@@ -515,7 +547,7 @@
   width: 100vw;
   height: 100vh;
   background: black;
-  z-index: 9;
+  z-index: 20000;
   opacity: 1;
   transition: opacity 2s ease;
   pointer-events: none;
@@ -701,12 +733,37 @@ transform: translate(-59vw, -5vh);
     font-size: 8vw;
   }
 }
+
+  .presentation-back {
+    position: fixed;
+    right: 3vw;
+    bottom: 4vh;
+    z-index: 10000;
+    padding: 1.2vh 2.2vw;
+    border: 0.12vw solid white;
+    border-radius: 999vw;
+    background: rgba(0, 0, 0, 0.28);
+    color: white;
+    opacity: 0.42;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2.6vw;
+    line-height: 1;
+    letter-spacing: 0;
+    cursor: pointer;
+  }
+
+  .presentation-back:hover {
+    background: white;
+    color: black;
+    opacity: 0.82;
+  }
   
   </style>
   <script type="module" src="vendor/model-viewer/model-viewer.min.js"></script>
 </head>
 <body>
   <div id="loading-screen"></div>
+  <button class="presentation-back" type="button" aria-label="Back to presentation">BACK</button>
   <a class="scroll-label"  data-show="0.034 0.284 0.534 0.784" data-hide="0.05 0.3 0.55 0.8" style="top: 5%;" data-modal="modal1">About me</a>
   <a class="scroll-label"  data-show="0.036 0.286 0.536 0.786" data-hide="0.055 0.305 0.555 0.805" style="left: 7%" data-modal="modal1">This is my profile.</a>
   <a class="scroll-label"  data-show="0.066 0.316 0.566 0.816" data-hide="0.086 0.336 0.586 0.836" style="top: 65%;"data-modal="modal2">Hardware<div class="modal-hitbox" data-modal="modal2"></div></a>
@@ -761,21 +818,17 @@ transform: translate(-59vw, -5vh);
   <div class="modal-content">
     <div class="modal-close close-modal"></div>
     <div class="loading-indicator hidden">Now Loading...</div>
-    <canvas id="modal2-canvas"class="modal-canvas"></canvas>
+    <video id="modal2-canvas" class="modal-canvas" src="movie/modal2.mp4" autoplay muted loop playsinline style="top: 10%; left: 13%;"></video>
+    <button class="video-sound-toggle" type="button" data-video-sound="modal2-canvas">SOUND OFF</button>
     <div class="modal2-hover">
-      <img class="modal2-image" src="img/Drum2.png" alt="drums"/>
-      <div class="modal2-text">Virtual Drums はパントマイムに似た動きで演奏が可能なグローブ型のデバイスであり、<br>
+      <img class="modal2-image"  src="img/Drum2.png" alt="drums"/>
+      <div class="modal2-text"style="left: 10%;top: 10%;">Virtual Drums はパントマイムに似た動きで演奏が可能なグローブ型のデバイスであり、<br>
 「第三回 100Project」にて製作を行なった。<br>
 当 Project では Virtual Drums チームリーダーの役職に就き、今作品の着想から最終プレゼンまでを務めた。<br>
 Arduino で MIDI 音楽ソフトを動かすスクリプトや赤外線レーザー測距での距離調整等、様々なプロトタイプを都度製作し、先輩から助言をいただきながら改良を続けた。<br>
 優秀ハードウェア賞受賞<br><br>
 YouTube 動画<br><a href="https://www.youtube.com/watch?v=LGOJBzxyIWU" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=LGOJBzxyIWU</a></div>
     </div>
-    </div>
-    <div class="modal-description" id="modal2-description">
-      Grab & play.<br><br>
-      DecimatedWireframe<br>
-      Software: Blender
     </div>
   </div>
 </div>
@@ -846,7 +899,7 @@ YouTube 動画<br><a href="https://www.youtube.com/watch?v=LGOJBzxyIWU" target="
   <script type="module">
         window.addEventListener('load', () => {
   setTimeout(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    window.scrollTo({ top: 1, behavior: 'auto' });
   }, 50);
    if (window.innerWidth <= 768) {
     document.querySelectorAll('.modal-hitbox').forEach(el => el.remove());
@@ -1290,6 +1343,7 @@ function openModal(modalEl) {
       m.classList.remove("visible");
       m.style.display = "none";
       m.style.pointerEvents = "none";
+      m.querySelector("video")?.pause();
     }
   });
   modalEl.classList.add('visible');
@@ -1299,7 +1353,12 @@ function openModal(modalEl) {
     modalEl.style.pointerEvents = 'auto';
     const canvas = modalEl.querySelector('canvas');
     if (canvas) canvas.style.pointerEvents = 'auto';
- if (!modalViewers[modalId]?.initialized) {
+    const video = modalEl.querySelector('video');
+    if (video) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }
+    if (!video && !modalViewers[modalId]?.initialized) {
       initModalViewer(modalId);
     }
   }, 0);
@@ -1313,6 +1372,8 @@ function closeModal(modalEl) {
 
   const canvas = modalEl.querySelector('canvas');
   if (canvas) canvas.style.pointerEvents = 'none';
+  const video = modalEl.querySelector('video');
+  if (video) video.pause();
 
   if (viewer) {
     cancelAnimationFrame(viewer.animationId);
@@ -1363,6 +1424,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   bindModalClosers();
+
+  document.querySelector('.presentation-back')?.addEventListener('click', () => {
+    const params = new URLSearchParams(window.location.search);
+    const returnUrl = params.get('return');
+    if (returnUrl) {
+      window.location.href = returnUrl;
+      return;
+    }
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    window.location.href = '../presentation.html';
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const startModal = params.get('modal');
+  if (startModal) {
+    requestAnimationFrame(() => {
+      const modalEl = document.getElementById(startModal);
+      if (modalEl) openModal(modalEl);
+    });
+  }
+
+  document.querySelectorAll('[data-video-sound]').forEach((button) => {
+    const video = document.getElementById(button.dataset.videoSound);
+    if (!video) return;
+    const syncButton = () => {
+      const isOn = !video.muted && video.volume > 0;
+      button.classList.toggle('is-on', isOn);
+      button.textContent = isOn ? 'SOUND ON' : 'SOUND OFF';
+    };
+    button.addEventListener('click', () => {
+      video.muted = !video.muted;
+      if (!video.muted) {
+        video.volume = 1;
+        video.play().catch(() => {});
+      }
+      syncButton();
+    });
+    syncButton();
+  });
 });
 
 
