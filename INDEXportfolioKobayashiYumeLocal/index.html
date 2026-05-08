@@ -5,37 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <title>KobayashiYume-portfolio</title>
-  <script>
-    (() => {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('view') === 'desktop') return;
-
-      const ua = navigator.userAgent || "";
-      const width = window.innerWidth || document.documentElement.clientWidth || 0;
-      const height = window.innerHeight || document.documentElement.clientHeight || 0;
-      const isPortrait = height > width;
-      const aspectRatio = height > 0 ? (width / height) : 1;
-      const isTouch = (navigator.maxTouchPoints || 0) > 0;
-
-      const isIPhone = /iPhone|iPod/i.test(ua);
-      const isAndroidPhone = /Android/i.test(ua) && /Mobile/i.test(ua);
-      const isPhoneUA = isIPhone || isAndroidPhone;
-
-      const isIPadLike = /iPad/i.test(ua) || (navigator.platform === "MacIntel" && (navigator.maxTouchPoints || 0) > 1);
-      const isTabletUA = /Tablet|Kindle|Silk|PlayBook|Android(?!.*Mobile)/i.test(ua) || isIPadLike;
-      if (isTabletUA) return;
-
-      const isPhoneByHeuristic = isPortrait && isTouch && width > 0 && width <= 600 && aspectRatio <= 0.6;
-      if (!isPhoneUA && !isPhoneByHeuristic) return;
-
-      if (/\/mobile\.html$/i.test(window.location.pathname)) return;
-
-      const target = new URL("./mobile.html", window.location.href);
-      target.search = window.location.search;
-      target.hash = window.location.hash;
-      window.location.replace(target.toString());
-    })();
-  </script>
 <style>    @font-face {
   font-family: "Bebas Neue";
   src: url("./fonts/BebasNeue.woff2") format("woff2");
@@ -338,7 +307,7 @@
   position: absolute;
   left: 52vw;
   top: 26vh;
-  width: clamp(400px, 50vmin, 700px);
+  width: 39vw;
   z-index: 8;
 }
 .modal4-image {
@@ -355,7 +324,8 @@
   top: 0;
   width: 100%;
   z-index: 2;
-  font-size: 1.1rem;
+    font-size: 1.5vw;
+  line-height: 1.55;
   letter-spacing: 0.02rem;
   font-weight: 300;
   font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
@@ -376,13 +346,14 @@
   position: absolute;
   left: 52vw;
   top: 68vh;
-  width: clamp(300px, 42vmin, 560px);
+  width: 31vw;
   z-index: 8;
 }
 .modal4-image2 {
   position: relative;
   display: block;
   width: 100%;
+  
   height: auto;
   pointer-events: auto;
   cursor: pointer;
@@ -393,7 +364,8 @@
   top: 0;
   width: 100%;
   z-index: 2;
-  font-size: 1.1rem;
+  font-size: 1.5vw;
+  line-height: 1.55;
   letter-spacing: 0.02rem;
   font-weight: 300;
   font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
@@ -585,155 +557,6 @@
 }
 
 
-    @media (max-width: 768px) {
-      .scroll-label:first-of-type,
-    .scroll-label:nth-of-type(7) {
-      font-size: 25vw;
-      left: 2%;
-
-    }
-
-        .scroll-label:nth-of-type(2){
-              top: 24%;
-font-size: 4vw;
-    }
-    .scroll-label:nth-of-type(3){
-      left: 20%;
-      top: 15%;
-      font-size: 23vw;
-    }
-    .scroll-label:nth-of-type(4){
-        top: 35%;
-        left:30%;
-      font-size: 3vw;
-    }
-
-    .scroll-label:nth-of-type(6) ,
-    .scroll-label:nth-of-type(8) ,
-    .scroll-label:nth-of-type(10) 
-    {
-      top: 25%;
-     font-size: 3vw;
-    }
-
-    .scroll-label:nth-of-type(5) ,
-    .scroll-label:nth-of-type(9) 
-    {
-      font-size: 25vw;
-      left: 25%;
-    }
-    .intro-label{
-      top: 40%;
-}
-      .modal-hitbox {
-    display: none !important;
-  }
-
-
-#modal5-canvas { transform: translate(-20vw, -7vh) !important; }
-#modal4-canvas { transform: translate(-27vw, -6vh) !important; }
-#modal1-canvas { transform: translate(0vw, -8vh) !important; }
-#modal2-canvas { transform: translate(-31vw, -15vh) !important; }
-#modal3-canvas { transform: translate(-30vw, -5vh) !important; }
-
-
-#modal1-description{
- top: 21vh; 
- left: 65vw;
-}
-#modal4-description{
- top: 23vh; 
- left: 51vw;
-}
-#modal5-description{
-    top: 70vh;
-    left: 3vw;
-}
-.modal2-hover {
-  width: 52vw;  top: 70vh;left:4vw;
-}
-.modal4-hover {
-  width: 45vw;  top: 40vh;
-}
-.modal4-hover2 {
-  width: 40vw;  top: 70vh;
-}
-  .modal1-image {
-    width: 80vw;  top: 67vh;
-    left:8vw;
-  }
-
-
-  }
-  @media (max-width: 468px) {
-
-    .scroll-label:nth-of-type(2){
-      top: 35%;
-     font-size: 5vw;
-    }
-    .scroll-label:nth-of-type(3){
-      left: 20%;
-      top: 15%;
-      font-size: 23vw;
-    }
-    .scroll-label:nth-of-type(4) {
-      top: 65%;
-font-size: 5vw;
-
-    }
-        .scroll-label:nth-of-type(6) ,
-    .scroll-label:nth-of-type(8) ,
-    .scroll-label:nth-of-type(10) 
-    {
-     font-size: 5vw;
-    }
-    .modal-close {
-  width: 25vw;
-  height: 25vw;
-
-}
-.modal-close::before,
-.modal-close::after {
-  width: 20vw;  /* 線 */
-  height: 0.4vw;
-}
-  #modal5-canvas{
-  transform: translate(-44vw, 0) !important;
-  }
-  #modal4-canvas{
-  transform: translate(-58vw, -10vh) !important;
-  }
-  #modal1-canvas{
-  transform: translate(-51vw, -9vh) !important;
-  }
-  #modal2-canvas{
-  transform: translate(-45vw, -9vh) !important;
-  }
-      #modal3-canvas{
-transform: translate(-59vw, -5vh); 
-  }
-
-  #modal2-description{
-  left: 3vw;
-    left: 51vw;
-  }
-  #modal4-description{
- top: 6vh; 
- left: 2vw;
-}
-
-  .modal4-image {
-  top: 62vh;
-  }
-  .modal4-image2 {
-  top: 80vh;
-  }
-
-  .pdfdownload{
-    font-size: 8vw;
-  }
-}
-
   .presentation-back {
     position: fixed;
     right: 3vw;
@@ -901,9 +724,6 @@ YouTube 動画<br><a href="https://www.youtube.com/watch?v=LGOJBzxyIWU" target="
   setTimeout(() => {
     window.scrollTo({ top: 1, behavior: 'auto' });
   }, 50);
-   if (window.innerWidth <= 768) {
-    document.querySelectorAll('.modal-hitbox').forEach(el => el.remove());
-  }
 });
     import * as THREE from 'three';
     import { GLTFLoader } from './jsm/GLTFLoader.js';
@@ -1064,7 +884,7 @@ function updateLabels(scrollRatio) {
 
 window.updateLabels = updateLabels;
     let lastFrameTime = 0;
-let FRAME_MS = window.innerWidth <= 768 ? 1000 / 30 : 1000 / 60;
+let FRAME_MS = 1000 / 60;
 
 function animate(t = 0) {
   requestAnimationFrame(animate);
