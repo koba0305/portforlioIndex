@@ -559,7 +559,7 @@
 
   .presentation-back {
     position: fixed;
-    right: 3vw;
+    right: 15vw;
     bottom: 4vh;
     z-index: 10000;
     padding: 1.2vh 2.2vw;
@@ -567,12 +567,17 @@
     border-radius: 999vw;
     background: rgba(0, 0, 0, 0.28);
     color: white;
-    opacity: 0.42;
+    opacity: 0.32;
     font-family: "Bebas Neue", sans-serif;
     font-size: 2.6vw;
     line-height: 1;
     letter-spacing: 0;
     cursor: pointer;
+  }
+
+  .presentation-back.zero-y {
+    right: 3vw;
+    bottom: 4vh;
   }
 
   .presentation-back:hover {
@@ -587,6 +592,7 @@
 <body>
   <div id="loading-screen"></div>
   <button class="presentation-back" type="button" aria-label="Back to presentation">BACK</button>
+  <button class="presentation-back zero-y" type="button" aria-label="Back to presentation top">BACK TOP</button>
   <a class="scroll-label"  data-show="0.034 0.284 0.534 0.784" data-hide="0.05 0.3 0.55 0.8" style="top: 5%;" data-modal="modal1">About me</a>
   <a class="scroll-label"  data-show="0.036 0.286 0.536 0.786" data-hide="0.055 0.305 0.555 0.805" style="left: 7%" data-modal="modal1">This is my profile.</a>
   <a class="scroll-label"  data-show="0.066 0.316 0.566 0.816" data-hide="0.086 0.336 0.586 0.836" style="top: 65%;"data-modal="modal2">Hardware<div class="modal-hitbox" data-modal="modal2"></div></a>
@@ -601,6 +607,7 @@
   <a class="scroll-label"  data-show="0" data-hide="0.015" id="intro-label" style="left:5%; top: 20%;font-size: 20vw;cursor: default;">KOBAYASHI YUME</a>
   <a class="scroll-label download-link pdfdownload"  data-show="0.204 0.454 0.704 0.954" data-hide="0.225 0.475 0.725 0.975" id="contact-svg" style="top: 60%;" href="https://drive.google.com/file/d/1aYirjOamGPydNv5K7MS1zgUGApiZ8Lw_/view?usp=sharing" target="_blank" rel="noopener noreferrer">PORTfolio_PDF_DOWNLOAD</a>
 
+  
 <div id="glitch-template" style="display: none;">
   <div class="modal-bg">
     <div class="glitch-square" style="top: 14%; left: 15%; width: 20vw; height: 2vh;"></div>
@@ -630,9 +637,6 @@
     </div>
   </div>
 </div>
-
-
-
   </div>
 </div>
 
@@ -1245,9 +1249,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   bindModalClosers();
 
-  document.querySelector('.presentation-back')?.addEventListener('click', () => {
+  function presentationReturnUrl(forceTop = false) {
     const params = new URLSearchParams(window.location.search);
     const returnUrl = params.get('return');
+    if (returnUrl) {
+      const url = new URL(returnUrl, window.location.href);
+      if (forceTop) {
+        const hashParams = new URLSearchParams(url.hash.replace(/^#/, ''));
+        hashParams.set('y', '0.000');
+        url.hash = hashParams.toString();
+      }
+      return url.href;
+    }
+    return null;
+  }
+
+  document.querySelector('.presentation-back:not(.zero-y)')?.addEventListener('click', () => {
+    const returnUrl = presentationReturnUrl(false);
     if (returnUrl) {
       window.location.href = returnUrl;
       return;
@@ -1257,6 +1275,15 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     window.location.href = '../presentation.html';
+  });
+
+  document.querySelector('.presentation-back.zero-y')?.addEventListener('click', () => {
+    const returnUrl = presentationReturnUrl(true);
+    if (returnUrl) {
+      window.location.href = returnUrl;
+      return;
+    }
+    window.location.href = '../presentation.html#panel=0&y=0.000';
   });
 
   const params = new URLSearchParams(window.location.search);

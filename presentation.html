@@ -314,7 +314,9 @@
       width: var(--size, 9%);
       aspect-ratio: var(--aspect, 1 / 1);
       opacity: var(--anim-opacity, 0);
-      transform: translateY(var(--anim-y, 34%));
+      transform:
+        translate(var(--anchor-x, 0), var(--anchor-y, 0))
+        translateY(var(--anim-y, 34%));
       background: var(--fill, var(--color, var(--ink)));
       border: 0.08vw solid var(--ink);
       will-change: transform, opacity;
@@ -739,7 +741,7 @@
         <div class="panel-inner">
           <div class="scroll-anim black" id="slow_first" style="--z: 1; --x: 11%; --y: 39%;"></div>
           <div class="scroll-anim white large" id="mid_first" style="--z: 1; --x: 4%; --y: 56%;"></div>
-          <img class="scroll-anim svg-scroll" src="./images/indexthree2.png" id="fast_first" style="--z: 3; --x: 16%; --y: 12%; --size: min(70%, 120vh);" alt="">
+          <img class="scroll-anim svg-scroll" src="./images/indexthree2.png" id="fast_first" style="--z: 3; --x: 50%; --y: 50%; --size: min(76%, 120vh); --anchor-x: -49%; --anchor-y: -45%;" alt="">
           <div class="scroll-anim slash midi" id="fast_first" style="--z: 1; --x: 89%; --y: 44%;"></div>
           <div class="scroll-anim black mini" id="slow_first" style="--z: 1; --x: 85%; --y: 70%;"></div>
         </div>
@@ -980,8 +982,18 @@
       };
     }
 
+    function resetInputState() {
+      window.clearTimeout(yGestureTimer);
+      xIntent = 0;
+      yIntent = 0;
+      lock = false;
+      yLock = false;
+      yGestureLocked = false;
+    }
+
     function restorePresentationState() {
       const state = readPresentationState();
+      resetInputState();
       current = state.panel;
       deck.style.transform = `translateX(-${current * 14.285714}%)`;
       dots.forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === current));
@@ -1202,7 +1214,7 @@
       event.preventDefault();
       if (mostlyHorizontal) {
         if (lock) return;
-        xIntent += event.deltaX || event.deltaY;
+        xIntent -= event.deltaX || event.deltaY;
         if (Math.abs(xIntent) < window.innerWidth * 0.22) return;
         goTo(current + Math.sign(xIntent));
         return;
@@ -1252,6 +1264,7 @@
 
     window.addEventListener("pageshow", () => {
       cover.classList.remove("is-active");
+      resetInputState();
     });
 
     restorePresentationState();
